@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "241977723598",
+    "firebase_url": "https://zenzone-16a91-default-rtdb.firebaseio.com",
+    "project_id": "zenzone-16a91",
+    "storage_bucket": "zenzone-16a91.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241977723598:android:a9ed706b26bff75c1dde9f",
+        "android_client_info": {
+          "package_name": "com.example.zenzone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwPi3qW8lJWQgGDmS-_WbfW223eZdjLhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241977723598:android:8bcca3dcf54a7f7f1dde9f",
+        "android_client_info": {
+          "package_name": "com.example.zenzoneapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwPi3qW8lJWQgGDmS-_WbfW223eZdjLhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

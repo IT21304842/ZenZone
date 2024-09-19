@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ZenZone</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="Welcome">Welcome! Let’s set up an account for your child</string>
+    <string name="signup">Sign Up Now!</string>
+    <string name="Signup">Sign up !</string>
+    <string name="CreateAcc">Create account by filling the form below .</string>
+</resources>

@@ -31,8 +31,7 @@ class SignUp : AppCompatActivity() {
         binding.spinnerRelation.adapter = adapter
 
         binding.textView.setOnClickListener {
-            // Navigate to SignIn Activity
-//            val intent = Intent(this, SignIn::class.java)
+            val intent = Intent(this, LogIn::class.java)
             startActivity(intent)
         }
 
@@ -68,7 +67,7 @@ class SignUp : AppCompatActivity() {
                                             if (dbTask.isSuccessful) {
                                                 Log.d("SignUp", "User data saved to database")
                                                 // Navigate to SignIn Activity
-//                                                val intent = Intent(this, SignIn::class.java)
+//                                                val intent = Intent(this, LogIn::class.java)
                                                 startActivity(intent)
                                             } else {
                                                 Log.e("SignUp", "Failed to save user data", dbTask.exception)

@@ -14,4 +14,9 @@
     <string name="signup">Sign Up Now!</string>
     <string name="Signup">Sign up !</string>
     <string name="CreateAcc">Create account by filling the form below .</string>
+    <string-array name="relation_options">
+        <item>Mother</item>
+        <item>Father</item>
+        <item>Other</item>
+    </string-array>
 </resources>

@@ -63,10 +63,11 @@ class SignUp : AppCompatActivity() {
                                 // Save user data to Firebase Realtime Database
                                 userId?.let {
                                     database.child("users").child(it).setValue(user)
-                                        .addOnCompleteListener { dbTask ->                                            if (dbTask.isSuccessful) {
+                                        .addOnCompleteListener { dbTask ->
+                                            if (dbTask.isSuccessful) {
                                                 Log.d("SignUp", "User data saved to database")
                                                 // Navigate to SignIn Activity
-                                                val intent = Intent(this, Quiz1::class.java)
+                                                val intent = Intent(this, Quiz::class.java)
                                                 startActivity(intent)
                                             } else {
                                                 Log.e("SignUp", "Failed to save user data", dbTask.exception)

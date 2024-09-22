@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.gridlayout.widget.GridLayout
-import androidx.viewpager.widget.ViewPager
 import com.example.zenzoneapp.databinding.FragmentScheduleBinding
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,12 +24,18 @@ class Schedule : Fragment() {
     private val binding get() = _binding!!
 
     private val calendar = Calendar.getInstance()
+    private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentScheduleBinding.inflate(inflater, container, false)
+
+        // Initialize Firebase Auth and Database
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
 
         // Access ViewPager and TabLayout using the binding
         val viewPager = binding.viewPager
@@ -55,6 +66,11 @@ class Schedule : Fragment() {
         binding.nextMonthButton.setOnClickListener {
             calendar.add(Calendar.MONTH, 1)
             updateMonthView()
+        }
+
+        // Set up FloatingActionButton click listener to show popup
+        binding.fab.setOnClickListener {
+            showAddSchedulePopup()
         }
     }
 
@@ -95,11 +111,59 @@ class Schedule : Fragment() {
         }
     }
 
+    private fun showAddSchedulePopup() {
+        val inflater = LayoutInflater.from(requireContext())
+        val popupView = inflater.inflate(R.layout.schedule_new, null)
+
+        val activityNameEditText = popupView.findViewById<EditText>(R.id.activityNameEditText)
+        val descriptionEditText = popupView.findViewById<EditText>(R.id.descriptionEditText)
+        val specialNotesEditText = popupView.findViewById<EditText>(R.id.specialNotesEditText)
+        val addButton = popupView.findViewById<Button>(R.id.addButton)
+        val closeTextView = popupView.findViewById<ImageView>(R.id.txtclose)
+
+        val alertDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(popupView)
+            .create()
+
+        closeTextView.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        addButton.setOnClickListener {
+            val activityName = activityNameEditText.text.toString().trim()
+            val description = descriptionEditText.text.toString().trim()
+            val specialNotes = specialNotesEditText.text.toString().trim()
+            val userId = auth.currentUser?.uid
+
+            if (activityName.isNotEmpty() && userId != null) {
+                val activityData = ActivityData(activityName, description, specialNotes, userId)
+
+                // Save to Firebase Realtime Database
+                database.child("activities").push().setValue(activityData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Activity added!", Toast.LENGTH_SHORT).show()
+                        alertDialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Error adding activity", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        alertDialog.show()
+    }
+
+    data class ActivityData(
+        val activityName: String,
+        val description: String,
+        val specialNotes: String,
+        val userId: String
+    )
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
-
-
-

@@ -185,7 +185,7 @@ class Quiz : AppCompatActivity() {
         // Check if there are no more areas left
         if (currentAreaIndex >= areaList.size) {
             // Quiz finished, navigate to MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, EndQuiz::class.java)
             startActivity(intent)
             finish()
             return

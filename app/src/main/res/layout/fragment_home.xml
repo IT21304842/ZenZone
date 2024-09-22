@@ -1,21 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".Home">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="121dp"
-        android:layout_marginEnd="234dp"
-        android:layout_marginBottom="575dp"
-        android:text="Home" />
+        android:fontFamily="@font/karla_bold"
+        android:text="TODAY?"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/karla"
+        android:text="Are You Ready For"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.058" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/karla_medium"
+        android:text="Activities"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.354" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/main"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Current Month TextView -->
+            <TextView
+                android:id="@+id/currentMonthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karla_medium"
+                android:text="Current Month"
+                android:textSize="18sp" />
+
+            <!-- Horizontal Layout for Week Date Lables -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <!-- Placeholder for Dates -->
+
+                <TextView
+                    android:id="@+id/Sun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Sun"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Mon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Mon"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Tue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Tue"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Wed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Wed"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Thur"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Thur"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Fri"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Fri"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Sat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Sat"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+            <!-- Horizontal Layout for Week Dates -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Highlight for Today's Date -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <View
+                        android:id="@+id/todayCircle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_current_date"
+                        android:visibility="gone"
+                        android:layout_gravity="center" />
+
+                    <!-- Horizontal Layout for Week Dates -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Placeholder for Dates -->
+                        <TextView
+                            android:id="@+id/date1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="4"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="5"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="6"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/date7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

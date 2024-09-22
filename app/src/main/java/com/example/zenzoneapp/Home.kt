@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.constraintlayout.widget.ConstraintLayout
 import java.util.Calendar
 import java.util.Locale
 
@@ -60,40 +59,8 @@ class Home : Fragment() {
         calendar.add(Calendar.DAY_OF_MONTH, 1)
         date7.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
 
-        // Set the visibility and position of todayCircle
-        if (currentDate >= 1 && currentDate <= 7) {
-            todayCircle.visibility = View.VISIBLE
 
-            // Get the position of today's date TextView
-            val todayTextViewId = when (currentDate) {
-                1 -> R.id.date1
-                2 -> R.id.date2
-                3 -> R.id.date3
-                4 -> R.id.date4
-                5 -> R.id.date5
-                6 -> R.id.date6
-                7 -> R.id.date7
-                else -> R.id.date1 // default to avoid error
-            }
 
-            // Get the TextView for today's date
-            val todayTextView: TextView = view.findViewById(todayTextViewId)
-
-            // Get the layout parameters of the TextView
-            val layoutParams = todayCircle.layoutParams as ViewGroup.MarginLayoutParams
-
-            // Position the circle around the TextView
-            layoutParams.setMargins(
-                todayTextView.left,
-                todayTextView.top,
-                todayTextView.right,
-                todayTextView.bottom
-            )
-
-            todayCircle.layoutParams = layoutParams
-        } else {
-            todayCircle.visibility = View.GONE // Hide if the current date is not within range
-        }
 
         return view
     }

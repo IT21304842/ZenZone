@@ -19,9 +19,6 @@
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".Schedule"
-            android:exported="false" />
-        <activity
             android:name=".Home"
             android:exported="false" />
         <activity

@@ -28,13 +28,13 @@ open class BaseActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_schedule -> {
-                    replaceFragment(ScheduleFragment())
+                    replaceFragment(Schedule())
                     true
                 }
-//                R.id.bottom_therapy -> {
-//                    replaceFragment(TherapyFragment())
-//                    true
-//                }
+                R.id.bottom_therapy -> {
+                    replaceFragment(Therapy())
+                    true
+                }
 //                R.id.bottom_connect -> {
 //                    replaceFragment(ConnectFragment())
 //                    true

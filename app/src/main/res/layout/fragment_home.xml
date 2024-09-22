@@ -70,6 +70,9 @@
             android:padding="16dp">
 
             <!-- Current Month TextView -->
+
+            <!-- Horizontal Layout for Week Date Lables -->
+
             <TextView
                 android:id="@+id/currentMonthTextView"
                 android:layout_width="wrap_content"
@@ -78,7 +81,6 @@
                 android:text="Current Month"
                 android:textSize="18sp" />
 
-            <!-- Horizontal Layout for Week Date Lables -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

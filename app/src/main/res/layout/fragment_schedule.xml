@@ -1,18 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Schedule">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="121dp"
-        android:layout_marginEnd="234dp"
-        android:layout_marginBottom="575dp"
-        android:text="Schedule" />
+        android:fontFamily="@font/karla_bold"
+        android:text="Schedule"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
 
-</FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/main"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/prevMonthButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_back_ios_24"
+                    android:contentDescription="Previous Month"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/currentMonthTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Month"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/karla_medium"/>
+
+                <ImageButton
+                    android:id="@+id/nextMonthButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:contentDescription="Next Month"
+                android:background="?attr/selectableItemBackground" />
+            </LinearLayout>
+
+            <!-- Days of the Week Labels -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <!-- Placeholder for Weekday Labels -->
+                <TextView
+                    android:id="@+id/Sun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Sun"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Mon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Mon"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Tue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Tue"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Wed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Wed"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Thu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Thu"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Fri"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Fri"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/Sat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/karla"
+                    android:gravity="center"
+                    android:text="Sat"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Month Calendar -->
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/monthGridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                app:alignmentMode="alignMargins"
+                app:columnCount="7"
+                app:rowCount="6"
+                app:useDefaultMargins="true">
+
+            </androidx.gridlayout.widget.GridLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.065"
+        app:tabIndicatorColor="@color/Tint"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/black" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="412dp"
+        android:layout_height="215dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tablayout"
+        app:layout_constraintVertical_bias="0.911" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

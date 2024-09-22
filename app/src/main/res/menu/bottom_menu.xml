@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/bottom_schedule"
+        android:icon="@drawable/baseline_calendar_today_24"
+        android:title="Schedule" />
+    <item
+        android:id="@+id/bottom_therapy"
+        android:icon="@drawable/maki_doctor"
+        android:title="Therapy" />
+    <item
+        android:id="@+id/bottom_connect"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Connect" />
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/baseline_perm_identity_24"
+        android:title="Profile" />
+</menu>

@@ -25,10 +25,9 @@ class WelcomePage : AppCompatActivity() {
 
         // Set an onClickListener to handle the button click
         signUpButton.setOnClickListener {
-            // Create an intent to navigate to the sign up page
-            val intent = Intent(this, Quiz::class.java)
+            // Create an intent to navigate to the BaseActivity
+            val intent = Intent(this, BaseActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

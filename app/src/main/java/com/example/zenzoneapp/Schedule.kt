@@ -96,7 +96,6 @@ class Schedule : Fragment() {
             gridLayout.addView(emptyTextView)
         }
 
-        // Fill the GridLayout with day numbers
         for (day in 1..daysInMonth) {
             val dayTextView = TextView(context)
             dayTextView.text = day.toString()
@@ -107,9 +106,25 @@ class Schedule : Fragment() {
             )
             dayTextView.setPadding(16, 16, 16, 16)
             dayTextView.textSize = 16f
+
+            dayTextView.setOnClickListener {
+                val selectedDate = calendar.clone() as Calendar
+                selectedDate.set(Calendar.DAY_OF_MONTH, day)
+                showScheduleForSelectedDate(selectedDate)
+            }
+
             gridLayout.addView(dayTextView)
         }
+
     }
+
+    private fun showScheduleForSelectedDate(date: Calendar) {
+        // Display schedules for the selected date or prompt to add a new schedule.
+        val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date.time)
+        Toast.makeText(context, "Selected Date: $dateString", Toast.LENGTH_SHORT).show()
+        // Optionally, launch a dialog or navigate to another fragment with the schedule details.
+    }
+
 
     private fun showAddSchedulePopup() {
         val inflater = LayoutInflater.from(requireContext())

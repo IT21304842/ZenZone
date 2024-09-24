@@ -22,36 +22,22 @@
         android:layout_marginTop="8dp"
         android:baselineAligned="false"
         android:fontFamily="@font/karla_medium"
-        android:text="Schedule Your New Activity"
+        android:text="Activity Name"
         android:textAlignment="center"
         android:textSize="22sp" />
 
-    <EditText
-        android:id="@+id/activityNameEditText"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_edittext_background"
-        android:fontFamily="@font/karla"
-        android:hint="Activity name..."
-        android:padding="14dp"
-        android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/descriptionEditText"
-        android:layout_width="300dp"
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="242dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
         android:fontFamily="@font/karla"
-        android:hint="Description..."
-        android:lines="3"
-        android:textSize="14sp"
-        android:padding="14dp"
-        android:background="@drawable/rounded_edittext_background"/>
+        android:text="Activity Description"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:layout_margin="15dp"/>
 
     <EditText
         android:id="@+id/specialNotesEditText"

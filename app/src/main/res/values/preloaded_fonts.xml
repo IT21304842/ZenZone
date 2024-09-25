@@ -4,6 +4,7 @@
         <item>@font/actor</item>
         <item>@font/karla</item>
         <item>@font/karla_bold</item>
+        <item>@font/karla_extrabold</item>
         <item>@font/karla_extralight</item>
         <item>@font/karla_medium</item>
     </array>

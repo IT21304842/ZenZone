@@ -186,17 +186,17 @@
         app:tabTextColor="@color/black" />
 
     <!-- Floating Action Button -->
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="390dp"
-        android:layout_height="322dp"
-        android:background="@android:color/transparent"
+        android:layout_width="399dp"
+        android:layout_height="214dp"
+        android:layout_weight="1"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tablayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.192" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

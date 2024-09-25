@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class RecommendedScheduleAdapter(
@@ -38,9 +39,11 @@ class RecommendedScheduleAdapter(
 
         // Handle the Add Activity button click
         holder.addButton.setOnClickListener {
-            onAddClick(recommendedSchedule)
+            val dialog = AddRecommendedSchedulePopUp(recommendedSchedule.name, recommendedSchedule.description)
+            dialog.show((context as FragmentActivity).supportFragmentManager, "RecommendedScheduleDialog")
         }
     }
+
 
     override fun getItemCount(): Int {
         return recommendedList.size

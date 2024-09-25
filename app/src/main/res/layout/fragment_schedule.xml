@@ -16,6 +16,7 @@
         android:text="Schedule"
         android:textSize="40sp"
         android:textStyle="bold"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"
@@ -31,6 +32,7 @@
         app:cardBackgroundColor="@color/main"
         app:cardCornerRadius="14dp"
         app:cardElevation="8dp"
+        android:layout_marginHorizontal="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -189,8 +191,8 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="387dp"
-        android:layout_height="322dp"
+        android:layout_width="385dp"
+        android:layout_height="372dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    android:elevation="8dp"
+    android:backgroundTint="@color/main"
+    app:cardCornerRadius="14dp"
+    android:id="@+id/cardView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/karla_medium"
+            android:text="Activity Name"
+            android:textAlignment="textStart"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.125" />
+
+        <TextView
+            android:id="@+id/tvDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/karla"
+            android:text="Activity Description"
+            android:textAlignment="textStart"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.331"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintVertical_bias="0.047" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="57dp"
+            android:layout_height="53dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvName"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.222"
+            app:srcCompat="@drawable/baseline_sentiment_satisfied_alt_24" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/commentCardView"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/comment_card_background"
+            android:backgroundTint="@color/main"
+            android:elevation="8dp"
+            app:cardCornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.892"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDes"
+            app:layout_constraintVertical_bias="0.466">
+
+            <ImageView
+                android:id="@+id/commentimg"
+                android:layout_width="57dp"
+                android:layout_height="34dp"
+                android:layout_margin="5dp"
+                app:srcCompat="@drawable/baseline_chat_24"
+                app:tint="@color/Tint" />
+
+            <TextView
+                android:id="@+id/commentTextView"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/karla"
+                android:text="Add your comment..."
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/commentCardView"
+                app:layout_constraintStart_toStartOf="@+id/commentCardView"
+                app:layout_constraintTop_toBottomOf="@+id/tvDes" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

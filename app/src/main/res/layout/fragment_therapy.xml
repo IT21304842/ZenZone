@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Therapy">
@@ -23,6 +24,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTherapies"
+        android:layout_width="392dp"
+        android:layout_height="304dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.245" />
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -35,7 +47,7 @@
         app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.406" />
+        app:layout_constraintVertical_bias="0.576" />
 
     <TextView
         android:id="@+id/textView2"
@@ -49,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
+        app:layout_constraintVertical_bias="0.632" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -61,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintVertical_bias="0.614" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -70,10 +82,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.041">
+        app:layout_constraintVertical_bias="0.112">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/MedCardView"
@@ -135,7 +147,6 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-
                         <TextView
                             android:id="@+id/medication"
                             android:layout_width="200dp"
@@ -167,25 +178,25 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/removeButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:backgroundTint="@color/Tint"
-                    android:contentDescription="Remove"
-                    android:src="@drawable/baseline_remove_24" />
+                    <ImageButton
+                        android:id="@+id/removeButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/Tint"
+                        android:contentDescription="Remove"
+                        android:src="@drawable/baseline_remove_24" />
 
-                <ImageButton
-                    android:id="@+id/EditButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:backgroundTint="@color/Tint"
-                    android:contentDescription="Edit"
-                    android:src="@drawable/baseline_edit_24" />
+                    <ImageButton
+                        android:id="@+id/EditButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/Tint"
+                        android:contentDescription="Edit"
+                        android:src="@drawable/baseline_edit_24" />
 
                 </LinearLayout>
 
@@ -209,7 +220,7 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823"
+        app:layout_constraintVertical_bias="0.914"
         app:maxImageSize="40dp" />
 
 

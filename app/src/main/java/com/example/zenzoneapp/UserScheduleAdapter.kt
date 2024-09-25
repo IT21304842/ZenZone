@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class UserScheduleAdapter(
@@ -37,14 +38,28 @@ class UserScheduleAdapter(
 
         // Handle edit button click
         holder.btnEdit.setOnClickListener {
-            onEditClick(scheduleData)
+            val dialog = EditSchedulePopUp(scheduleData) { updatedSchedule ->
+                // Handle the updated schedule data
+                // Here, you should update the original scheduleList or notify the adapter
+                // For simplicity, consider notifying the adapter of changes
+                // scheduleList[position] = updatedSchedule // Update the data
+                // notifyItemChanged(position) // Notify the adapter
+            }
+            dialog.show((context as FragmentActivity).supportFragmentManager, "EditScheduleDialog")
         }
 
         // Handle delete button click
         holder.btnDelete.setOnClickListener {
-            onDeleteClick(scheduleData)
+            val dialog = RemoveSchedulaPopUp(scheduleData) { removedSchedule ->
+                // Handle removal of the schedule
+                // Here, you should remove the schedule from the list and notify the adapter
+                // scheduleList.remove(removedSchedule) // Remove the data
+                // notifyDataSetChanged() // Notify the adapter
+            }
+            dialog.show((context as FragmentActivity).supportFragmentManager, "RemoveScheduleDialog")
         }
     }
+
 
     override fun getItemCount(): Int {
         return scheduleList.size

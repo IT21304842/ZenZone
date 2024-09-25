@@ -58,9 +58,10 @@ class UserSchedule : Fragment() {
         // For example: Navigate to an edit fragment or show a dialog
     }
 
-    // Method to handle delete schedule
     private fun deleteSchedule(scheduleData: UserScheduleData) {
-        // Implement the action to delete the selected schedule
-        // For example: Show a confirmation dialog and then remove from the list
+        // Remove from the list and notify adapter
+        scheduleList = scheduleList.filter { it != scheduleData }
+        adapter.notifyDataSetChanged() // or use notifyItemRemoved if you manage the list with mutable types
     }
+
 }

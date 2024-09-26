@@ -1,11 +1,13 @@
 package com.example.zenzoneapp
 
 import MedicationListAdapter
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,7 +46,15 @@ class Therapy : Fragment() {
 
         // Set up Therapy RecyclerView
         recyclerView = view.findViewById(R.id.recyclerViewTherapies)
-        therapyAdapter = TherapyListAdapter(therapyList)
+        therapyAdapter = TherapyListAdapter(therapyList) { selectedTherapy ->
+            // Navigate to TherapyView fragment
+            val fragment = TherapyView.newInstance(selectedTherapy.name)
+            val fragmentManager = (requireActivity() as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment) // Ensure this ID matches your main fragment container
+                .addToBackStack(null) // Add to back stack for back navigation
+                .commit()
+        }
         val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = therapyAdapter
@@ -55,6 +65,8 @@ class Therapy : Fragment() {
         medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         medicationRecyclerView.adapter = medicationAdapter
     }
+
+
 }
 
 

@@ -50,8 +50,10 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.androidx.gridlayout)
     implementation(libs.firebase.firestore.ktx)
+
+    implementation("com.diogobernardino:williamchart:3.10.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
 }

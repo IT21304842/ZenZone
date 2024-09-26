@@ -26,7 +26,7 @@ class WelcomePage : AppCompatActivity() {
         // Set an onClickListener to handle the button click
         signUpButton.setOnClickListener {
             // Create an intent to navigate to the BaseActivity
-            val intent = Intent(this, LogIn::class.java)
+            val intent = Intent(this, TherapyViews::class.java)
             startActivity(intent)
         }
     }

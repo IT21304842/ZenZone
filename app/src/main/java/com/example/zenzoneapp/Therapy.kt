@@ -1,5 +1,6 @@
 package com.example.zenzoneapp
 
+import MedicationListAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,14 @@ class Therapy : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var therapyAdapter: TherapyListAdapter
+    private lateinit var medicationRecyclerView: RecyclerView
+    private lateinit var medicationAdapter: MedicationListAdapter
+    private var medicationList = listOf(
+        Medication("Medication 1", "10mg"),
+        Medication("Medication 2", "5mg"),
+        Medication("Medication 3", "20mg")
+    )
+
     private val therapyList = listOf(
         TherapyItem("Therapy 1", R.drawable.t1),
         TherapyItem("Therapy 2", R.drawable.t2),
@@ -33,14 +42,20 @@ class Therapy : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up Therapy RecyclerView
         recyclerView = view.findViewById(R.id.recyclerViewTherapies)
         therapyAdapter = TherapyListAdapter(therapyList)
-
-        // Change to GridLayoutManager for horizontal scrolling with 2 columns
         val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = therapyAdapter
+
+        // Set up Medication RecyclerView
+        medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
+        medicationAdapter = MedicationListAdapter(medicationList)
+        medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        medicationRecyclerView.adapter = medicationAdapter
     }
-
-
 }
+
+
+

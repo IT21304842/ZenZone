@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ZenZoneApp"
         tools:targetApi="31">
         <activity
+            android:name=".TherapyViews"
+            android:exported="false" />
+        <activity
             android:name=".EndQuiz"
             android:exported="false" />
         <activity

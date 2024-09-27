@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -45,9 +46,9 @@ class DailyActivitiesAdapter(
     }
 
     private fun showActivityDialog(context: Context, item: CardItem) {
-        // Create a dialog
+        // Create a dialog for Activity Details
         val dialog = Dialog(context)
-        dialog.setContentView(R.layout.activity_details_popup) // Assuming 'dialog' is the layout name
+        dialog.setContentView(R.layout.activity_details_popup)
 
         // Set activity name and description in the dialog
         val activityNameTextView = dialog.findViewById<TextView>(R.id.activityName)
@@ -61,9 +62,38 @@ class DailyActivitiesAdapter(
             dialog.dismiss() // Close the dialog
         }
 
-        // Show the dialog
+        // Complete button functionality
+        val completeButton = dialog.findViewById<Button>(R.id.addButton) // "Complete" button
+        completeButton.setOnClickListener {
+            dialog.dismiss() // Dismiss the "Activity Details" pop-up
+            showRateActivitiesDialog(context) // Open "Rate Daily Activities" pop-up
+        }
+
+        // Show the "Activity Details" dialog
         dialog.show()
     }
+
+    private fun showRateActivitiesDialog(context: Context) {
+        // Create a dialog for Rate Daily Activities
+        val rateDialog = Dialog(context)
+        rateDialog.setContentView(R.layout.rate_daily_activities_popup) // Assuming this is your layout file name
+
+        // Close button functionality for Rate Daily Activities
+        val closeButton = rateDialog.findViewById<ImageView>(R.id.txtclose)
+        closeButton.setOnClickListener {
+            rateDialog.dismiss() // Close the "Rate Daily Activities" pop-up
+        }
+
+        // Submit button functionality
+        val submitButton = rateDialog.findViewById<Button>(R.id.addButton) // "Submit" button
+        submitButton.setOnClickListener {
+            rateDialog.dismiss() // Submit action and close dialog (add functionality here if needed)
+        }
+
+        // Show the "Rate Daily Activities" dialog
+        rateDialog.show()
+    }
+
 
 
 

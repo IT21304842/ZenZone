@@ -33,7 +33,7 @@ android:padding="5dp">
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:fontFamily="@font/karla_medium"
-    android:text="Activity Name"
+    android:text="Activity Description"
     android:textAlignment="center"
     android:textSize="16sp" />
 

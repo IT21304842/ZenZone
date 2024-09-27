@@ -44,7 +44,7 @@
         android:outlineAmbientShadowColor="@android:color/transparent"
         android:outlineSpotShadowColor="@android:color/transparent"
         app:cardCornerRadius="14dp"
-        android:foreground="@drawable/rounded_edittext_background"
+        android:foreground="@drawable/card_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"

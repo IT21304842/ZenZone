@@ -81,6 +81,10 @@ class Home : Fragment() {
         // Get the current date
         val calendar = Calendar.getInstance()
 
+        // Capture today's date before modifying the calendar
+        val todayCalendar = Calendar.getInstance()
+        val todayDate = todayCalendar.get(Calendar.DAY_OF_MONTH)
+
         // Get the current month
         val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
         val currentMonth = monthFormat.format(calendar.time)
@@ -93,6 +97,16 @@ class Home : Fragment() {
         for (i in 0 until 7) {
             val date = calendar.get(Calendar.DAY_OF_MONTH)
             dateTextViews[i].text = date.toString()
+
+            // Highlight today's date
+            if (date == todayDate) {
+                dateTextViews[i].setBackgroundResource(R.drawable.circle_current_date)
+                dateTextViews[i].setTextColor(resources.getColor(R.color.white)) // Optional: Change text color for visibility
+            } else {
+                dateTextViews[i].setBackgroundResource(0)
+                dateTextViews[i].setTextColor(resources.getColor(R.color.black)) // Optional: Reset text color
+            }
+
             calendar.add(Calendar.DAY_OF_MONTH, 1) // Move to the next day
         }
     }

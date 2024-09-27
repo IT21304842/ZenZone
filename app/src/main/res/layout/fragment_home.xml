@@ -160,7 +160,6 @@
 
             </LinearLayout>
 
-
             <!-- Horizontal Layout for Week Dates -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,13 +201,16 @@
 
                         <TextView
                             android:id="@+id/date3"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/karla"
                             android:gravity="center"
                             android:text="3"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:padding="10dp"
+                            android:textColor="@android:color/black" /> <!-- Set default text color -->
+
 
                         <TextView
                             android:id="@+id/date4"

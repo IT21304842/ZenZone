@@ -50,14 +50,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:src="@drawable/baseline_access_time_24" />
 
                 <TextView
                     android:id="@+id/AppointmentTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="11dp"
+                    android:layout_margin="8dp"
                     android:fontFamily="@font/karla"
                     android:text="Time"
                     android:textSize="16sp" />
@@ -71,14 +71,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:src="@drawable/baseline_location_on_24" />
 
                 <TextView
                     android:id="@+id/AppointmentLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="11dp"
+                    android:layout_margin="8dp"
                     android:fontFamily="@font/karla"
                     android:text="Location"
                     android:textSize="16sp" />

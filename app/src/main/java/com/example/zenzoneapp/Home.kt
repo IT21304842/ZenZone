@@ -20,11 +20,15 @@ class Home : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var currentStage = 1 // To track the current stage
     private var lastClickedPosition = -1 // To track the last clicked card position
+
     private val cardItems = listOf(
         CardItem("Activity 1", "Description of Activity 1"),
         CardItem("Activity 2", "Description of Activity 2"),
         CardItem("Activity 3", "Description of Activity 3"),
     )
+
+    // Add a variable to track the total number of cards
+    private val totalCards = cardItems.size
 
     private lateinit var appointmentRecyclerView: RecyclerView
     private val appointmentItems = listOf(
@@ -117,11 +121,11 @@ class Home : Fragment() {
             return // Do nothing if the same card is clicked again
         }
 
-        // Update the progress based on the clicked card's position
-        if (position == currentStage) {
+        // If the clicked position is the next stage, update the current stage
+        if (position == currentStage - 1) {
             updateProgress()
-        } else if (position > currentStage) {
-            currentStage = position
+        } else if (position > currentStage - 1) {
+            currentStage = position + 1 // Move to the next stage
             updateProgress()
         }
 
@@ -130,24 +134,19 @@ class Home : Fragment() {
     }
 
     private fun updateProgress() {
-        // Update the progress based on the current stage
-        when (currentStage) {
-            1 -> {
-                progressBar.progress = 25
-                progressText.text = "Stage 1"
-            }
-            2 -> {
-                progressBar.progress = 50
-                progressText.text = "Stage 2"
-            }
-            3 -> {
-                progressBar.progress = 75
-                progressText.text = "Stage 3"
-            }
-            4 -> {
-                progressBar.progress = 100
-                progressText.text = "Completed"
-            }
+        // Calculate the progress percentage
+        val progressPercentage = (currentStage.toFloat() / totalCards * 100).toInt()
+        progressBar.progress = progressPercentage
+
+        // Update the progress text based on the current stage
+        progressText.text = when (currentStage) {
+            in 1 until totalCards -> "Activity $currentStage"
+            totalCards -> "You Did Well Today!"
+            else -> "Activity 1"
         }
     }
+
+
+
+
 }

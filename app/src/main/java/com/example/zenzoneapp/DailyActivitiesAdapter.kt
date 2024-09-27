@@ -1,8 +1,11 @@
 package com.example.zenzoneapp
 
+import android.app.Dialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -31,9 +34,38 @@ class DailyActivitiesAdapter(
 
         // Set a click listener on the card
         holder.cardView.setOnClickListener {
-            onItemClick(position) // Call the click listener
+            onItemClick(position) // Call the click listener for the card
+        }
+
+        // Set click listener for the moreVertIcon
+        holder.itemView.findViewById<ImageView>(R.id.moreVertIcon).setOnClickListener {
+            // Trigger dialog here
+            showActivityDialog(holder.itemView.context, item)
         }
     }
+
+    private fun showActivityDialog(context: Context, item: CardItem) {
+        // Create a dialog
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.activity_details_popup) // Assuming 'dialog' is the layout name
+
+        // Set activity name and description in the dialog
+        val activityNameTextView = dialog.findViewById<TextView>(R.id.activityName)
+        val activityDesTextView = dialog.findViewById<TextView>(R.id.activityDes)
+        activityNameTextView.text = item.name
+        activityDesTextView.text = item.description
+
+        // Close button functionality
+        val closeButton = dialog.findViewById<ImageView>(R.id.txtclose)
+        closeButton.setOnClickListener {
+            dialog.dismiss() // Close the dialog
+        }
+
+        // Show the dialog
+        dialog.show()
+    }
+
+
 
     override fun getItemCount() = items.size
 }

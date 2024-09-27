@@ -25,6 +25,14 @@ class Home : Fragment() {
         // Add more card items as needed
     )
 
+    private lateinit var appointmentRecyclerView: RecyclerView
+    private val appointmentItems = listOf(
+        AppointmentItem("Appointment 1", "10:00 AM", "Location A"),
+        AppointmentItem("Appointment 2", "11:30 AM", "Location B"),
+        AppointmentItem("Appointment 3", "1:00 PM", "Location C"),
+        // Add more appointment items as needed
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +50,14 @@ class Home : Fragment() {
             onCardClick(position)
         }
         recyclerView.adapter = adapter
+
+        // Initialize the appointment recycler view
+        appointmentRecyclerView = view.findViewById(R.id.AppointmentRecyclerView)
+
+        // Set up the appointment RecyclerView
+        appointmentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val appointmentAdapter = AppointmentNoticesAdapter(appointmentItems)
+        appointmentRecyclerView.adapter = appointmentAdapter
 
         return view
     }

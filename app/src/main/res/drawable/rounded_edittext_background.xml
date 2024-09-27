@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#6696E7E0" />
-    <corners android:radius="14dp" />
-
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color (optional) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/> <!-- Transparent background -->
+        </shape>
+    </item>
+    <!-- Outline -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/> <!-- Make sure the inside is transparent -->
+            <stroke
+                android:width="2dp"
+            android:color="@color/base2"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+</layer-list>

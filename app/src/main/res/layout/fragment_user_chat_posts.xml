@@ -9,8 +9,12 @@
         android:id="@+id/materialCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="12dp"
+        app:queryBackground="@android:color/transparent"
+        android:outlineAmbientShadowColor="@android:color/transparent"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,7 +27,8 @@
             android:layout_height="wrap_content"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/transparent"
-            app:queryHint="Search here ..." />
+            app:queryHint="Search ..."
+            app:searchIcon="@drawable/baseline_search_24" />
 
     </com.google.android.material.card.MaterialCardView>
 

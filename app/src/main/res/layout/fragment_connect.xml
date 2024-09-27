@@ -34,6 +34,61 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintVertical_bias="0.0" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/commentCardView"
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:backgroundTint="@android:color/transparent"
+        android:elevation="0dp"
+        android:outlineAmbientShadowColor="@android:color/transparent"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        app:cardCornerRadius="14dp"
+        android:foreground="@drawable/rounded_edittext_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/PostDes"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/karla"
+                android:text="Type your message or Doubt..."
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/commentCardView"
+                app:layout_constraintStart_toStartOf="@+id/commentCardView"
+                app:layout_constraintTop_toBottomOf="@+id/tvDes" />
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#69D4DC"
+                android:fontFamily="@font/karla_bold"
+                android:text="Post"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="393dp"
@@ -41,8 +96,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.044"
+        app:layout_constraintTop_toBottomOf="@+id/commentCardView"
+        app:layout_constraintVertical_bias="0.065"
         app:tabBackground="@drawable/tab_background_selector"
         app:tabIndicatorColor="@color/Tint"
         app:tabSelectedTextColor="@color/white"
@@ -51,13 +106,14 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="391dp"
-        android:layout_height="519dp"
+        android:layout_width="387dp"
+        android:layout_height="370dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tablayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

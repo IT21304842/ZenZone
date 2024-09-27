@@ -4,64 +4,85 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import java.util.Calendar
-import java.util.Locale
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.zenzoneapp.R
 
 class Home : Fragment() {
+
+    private lateinit var progressBar: ProgressBar
+    private lateinit var progressText: TextView
+    private lateinit var recyclerView: RecyclerView
+    private var currentStage = 1 // To track the current stage
+    private var lastClickedPosition = -1 // To track the last clicked card position
+    private val cardItems = listOf(
+        CardItem("Activity 1", "Description of Activity 1"),
+        CardItem("Activity 2", "Description of Activity 2"),
+        CardItem("Activity 3", "Description of Activity 3"),
+        // Add more card items as needed
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // Get references to the TextViews
-        val currentMonthTextView: TextView = view.findViewById(R.id.currentMonthTextView)
-        val date1: TextView = view.findViewById(R.id.date1)
-        val date2: TextView = view.findViewById(R.id.date2)
-        val date3: TextView = view.findViewById(R.id.date3)
-        val date4: TextView = view.findViewById(R.id.date4)
-        val date5: TextView = view.findViewById(R.id.date5)
-        val date6: TextView = view.findViewById(R.id.date6)
-        val date7: TextView = view.findViewById(R.id.date7)
-        val todayCircle: View = view.findViewById(R.id.todayCircle)
+        // Initialize views
+        progressBar = view.findViewById(R.id.progressBar)
+        progressText = view.findViewById(R.id.progressText)
+        recyclerView = view.findViewById(R.id.recyclerView)
 
-        // Get the current calendar instance
-        val calendar = Calendar.getInstance()
-
-        // Set the current month name
-        val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-        currentMonthTextView.text = monthName
-
-        // Get the current date
-        val currentDate = calendar.get(Calendar.DAY_OF_MONTH)
-
-        // Set the dates for the current week
-        val firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) // 1 = Sunday, 2 = Monday, ...
-        val dayOffset = firstDayOfWeek - Calendar.SUNDAY // Adjust to start from Sunday
-        calendar.add(Calendar.DAY_OF_MONTH, -dayOffset) // Move to the Sunday of the current week
-
-        // Populate the TextViews for the week dates
-        date1.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date2.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date3.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date4.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date5.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date6.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date7.text = (calendar.get(Calendar.DAY_OF_MONTH)).toString()
-
-
-
+        // Set up RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        val adapter = DailyActivitiesAdapter(cardItems) { position ->
+            onCardClick(position)
+        }
+        recyclerView.adapter = adapter
 
         return view
+    }
+
+    private fun onCardClick(position: Int) {
+        // Check if the clicked card is the same as the last clicked card
+        if (position == lastClickedPosition) {
+            return // Do nothing if the same card is clicked again
+        }
+
+        // Update the progress based on the clicked card's position
+        if (position == currentStage) {
+            updateProgress()
+        } else if (position > currentStage) {
+            currentStage = position
+            updateProgress()
+        }
+
+        // Update the last clicked position
+        lastClickedPosition = position
+    }
+
+    private fun updateProgress() {
+        // Update the progress based on the current stage
+        when (currentStage) {
+            1 -> {
+                progressBar.progress = 25
+                progressText.text = "Stage 1"
+            }
+            2 -> {
+                progressBar.progress = 50
+                progressText.text = "Stage 2"
+            }
+            3 -> {
+                progressBar.progress = 75
+                progressText.text = "Stage 3"
+            }
+            4 -> {
+                progressBar.progress = 100
+                progressText.text = "Completed"
+            }
+        }
     }
 }

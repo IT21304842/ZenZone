@@ -23,12 +23,20 @@
         android:layout_marginBottom="10dp"
         android:baselineAligned="false"
         android:fontFamily="@font/karla_medium"
-        android:text="Started Following New Therapy?"
+        android:text="Add New Medications"
         android:textAlignment="center"
         android:textSize="22sp" />
 
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/medication_icon"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+
     <EditText
-        android:id="@+id/therapyNameEditText"
+        android:id="@+id/NameEditText"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
@@ -37,39 +45,37 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_edittext_background"
         android:fontFamily="@font/karla"
-        android:hint="Therapy Name..."
+        android:hint="Name..."
         android:padding="14dp"
         android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/descriptionEditText"
+        android:id="@+id/TimeEditText"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
         android:fontFamily="@font/karla"
-        android:hint="Description..."
-        android:lines="3"
-        android:textSize="14sp"
+        android:hint="Time..."
         android:padding="14dp"
-        android:background="@drawable/rounded_edittext_background"/>
+        android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/specialNotesEditText"
+        android:id="@+id/DoseEditText"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
         android:fontFamily="@font/karla"
-        android:hint="Special Notes..."
-        android:lines="4"
-        android:textSize="14sp"
+        android:hint="Dose..."
         android:padding="14dp"
-        android:background="@drawable/rounded_edittext_background"/>
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/addButton"

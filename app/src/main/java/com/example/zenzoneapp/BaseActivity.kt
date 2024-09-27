@@ -35,10 +35,10 @@ open class BaseActivity : AppCompatActivity() {
                     replaceFragment(Therapy())
                     true
                 }
-//                R.id.bottom_connect -> {
-//                    replaceFragment(ConnectFragment())
-//                    true
-//                }
+                R.id.bottom_connect -> {
+                    replaceFragment(Connect())
+                    true
+                }
 //                R.id.bottom_profile -> {
 //                    replaceFragment(ProfileFragment())
 //                    true

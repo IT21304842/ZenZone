@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zenzoneapp.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Home : Fragment() {
 
@@ -22,7 +24,6 @@ class Home : Fragment() {
         CardItem("Activity 1", "Description of Activity 1"),
         CardItem("Activity 2", "Description of Activity 2"),
         CardItem("Activity 3", "Description of Activity 3"),
-        // Add more card items as needed
     )
 
     private lateinit var appointmentRecyclerView: RecyclerView
@@ -30,8 +31,10 @@ class Home : Fragment() {
         AppointmentItem("Appointment 1", "10:00 AM", "Location A"),
         AppointmentItem("Appointment 2", "11:30 AM", "Location B"),
         AppointmentItem("Appointment 3", "1:00 PM", "Location C"),
-        // Add more appointment items as needed
     )
+
+    private lateinit var currentMonthTextView: TextView
+    private lateinit var dateTextViews: List<TextView>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +49,7 @@ class Home : Fragment() {
 
         // Set up RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = DailyActivitiesAdapter(cardItems) { position ->
-            onCardClick(position)
-        }
+        val adapter = DailyActivitiesAdapter(cardItems) { position -> onCardClick(position) }
         recyclerView.adapter = adapter
 
         // Initialize the appointment recycler view
@@ -59,7 +60,41 @@ class Home : Fragment() {
         val appointmentAdapter = AppointmentNoticesAdapter(appointmentItems)
         appointmentRecyclerView.adapter = appointmentAdapter
 
+        // Initialize current month and week dates
+        currentMonthTextView = view.findViewById(R.id.currentMonthTextView)
+        dateTextViews = listOf(
+            view.findViewById(R.id.date1),
+            view.findViewById(R.id.date2),
+            view.findViewById(R.id.date3),
+            view.findViewById(R.id.date4),
+            view.findViewById(R.id.date5),
+            view.findViewById(R.id.date6),
+            view.findViewById(R.id.date7)
+        )
+
+        setCurrentMonthAndDates()
+
         return view
+    }
+
+    private fun setCurrentMonthAndDates() {
+        // Get the current date
+        val calendar = Calendar.getInstance()
+
+        // Get the current month
+        val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+        val currentMonth = monthFormat.format(calendar.time)
+        currentMonthTextView.text = currentMonth
+
+        // Set the current week's dates
+        val firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1 // 0 = Sunday, 1 = Monday, etc.
+        calendar.add(Calendar.DAY_OF_MONTH, -firstDayOfWeek) // Go to the first day of the week
+
+        for (i in 0 until 7) {
+            val date = calendar.get(Calendar.DAY_OF_MONTH)
+            dateTextViews[i].text = date.toString()
+            calendar.add(Calendar.DAY_OF_MONTH, 1) // Move to the next day
+        }
     }
 
     private fun onCardClick(position: Int) {

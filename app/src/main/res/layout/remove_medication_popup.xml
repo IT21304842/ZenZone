@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_corners"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:src="@drawable/baseline_close_24" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
+        android:fontFamily="@font/karla"
+        android:text="Do you want to remove this Medication ? "
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#69D4DC"
+        android:fontFamily="@font/karla_bold"
+        android:text="Remove"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

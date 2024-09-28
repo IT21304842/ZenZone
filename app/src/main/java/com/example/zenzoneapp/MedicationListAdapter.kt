@@ -28,4 +28,6 @@ class MedicationListAdapter(private val medicationList: List<Medication>) :
     override fun getItemCount(): Int {
         return medicationList.size
     }
+
+
 }

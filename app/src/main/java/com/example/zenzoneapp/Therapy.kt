@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Therapy : Fragment() {
 
@@ -64,6 +65,18 @@ class Therapy : Fragment() {
         medicationAdapter = MedicationListAdapter(medicationList)
         medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         medicationRecyclerView.adapter = medicationAdapter
+
+        // Set up click listener for addMedication button
+        view.findViewById<FloatingActionButton>(R.id.addMed).setOnClickListener {
+            val medicationDialog = MedicationDialogFragment()
+            medicationDialog.show(parentFragmentManager, "MedicationDialog")
+        }
+
+        // Set up click listener for addTherapy button
+        view.findViewById<FloatingActionButton>(R.id.addTherapy).setOnClickListener {
+            val therapyDialog = TherapyDialogFragment()
+            therapyDialog.show(parentFragmentManager, "TherapyDialog")
+        }
     }
 
 

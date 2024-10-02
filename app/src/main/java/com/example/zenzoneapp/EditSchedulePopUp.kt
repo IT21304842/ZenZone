@@ -17,7 +17,7 @@ class EditSchedulePopUp(private val scheduleData: UserScheduleData, private val 
         val editButton: Button = dialog.findViewById(R.id.editButton)
 
         // Set initial values
-        editTextName.setText(scheduleData.name)
+        editTextName.setText(scheduleData.activityName)
 
         // Confirm edit
         editButton.setOnClickListener {

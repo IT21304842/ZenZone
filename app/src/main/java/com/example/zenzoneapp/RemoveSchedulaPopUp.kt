@@ -21,7 +21,7 @@ class RemoveSchedulaPopUp(private val scheduleData: UserScheduleData, private va
         val desc: TextView = dialog.findViewById(R.id.desc)
         val removeButton: Button = dialog.findViewById(R.id.addButton)
 
-        desc.text = "Do you want to remove ${scheduleData.name} from Schedule?"
+        desc.text = "Do you want to remove ${scheduleData.activityName} from Schedule?"
 
         // Close dialog
         txtClose.setOnClickListener { dismiss() }

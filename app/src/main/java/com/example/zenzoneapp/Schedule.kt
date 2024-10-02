@@ -16,9 +16,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.zenzoneapp.databinding.FragmentScheduleBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,13 +27,14 @@ class Schedule : Fragment() {
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
 
-    private val calendar = Calendar.getInstance()
+    private lateinit var userSchedule: UserSchedule
 
+    private val calendar = Calendar.getInstance()
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
-    // Variable to store the selected date
     private var selectedDate: String? = null
+    private var selectedDateTextView: TextView? = null // To keep track of the selected date
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,54 +42,41 @@ class Schedule : Fragment() {
     ): View? {
         _binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
-        // Initialize Firebase Auth and Database
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
 
-        // Access ViewPager and TabLayout using the binding
-        val viewPager = binding.viewPager
-        val tabLayout = binding.tablayout
+        // Create UserSchedule instance here
+        userSchedule = UserSchedule() // Initialize the fragment
 
         val fragmentAdapter = FragmentAdapter(childFragmentManager)
-        fragmentAdapter.addFragment(UserSchedule(), "Yours")
+        fragmentAdapter.addFragment(userSchedule, "Yours") // Use the initialized instance
         fragmentAdapter.addFragment(RecommendationSchedule(), "Recommended")
         fragmentAdapter.addFragment(HistorySchedule(), "History")
 
-        viewPager.adapter = fragmentAdapter
-        tabLayout.setupWithViewPager(viewPager)
+        binding.viewPager.adapter = fragmentAdapter
+        binding.tablayout.setupWithViewPager(binding.viewPager)
 
-        // Initialize datesContainer
         val datesContainer = binding.datesContainer
         updateMonthView(datesContainer)
 
-        // Set up FloatingActionButton click listener to show popup
         binding.fab.setOnClickListener {
             showAddSchedulePopup()
         }
 
-        return binding.root // Return the binding root
+        return binding.root
     }
 
     private fun updateMonthView(datesContainer: LinearLayout) {
-        // Update current month TextView
         val currentMonthName = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
         binding.currentMonthTextView.text = currentMonthName
-
-        // Clear previous dates
         datesContainer.removeAllViews()
-
-        // Set calendar to first day of the month
         calendar.set(Calendar.DAY_OF_MONTH, 1)
 
-        // Get the first day of the month and determine how many days are in this month
         val firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        // Populate the calendar
         populateCalendarDates(firstDayOfWeek, daysInMonth, datesContainer)
     }
-
-    private var selectedDateTextView: TextView? = null // To keep track of the selected date
 
     private fun populateCalendarDates(firstDayOfWeek: Int, daysInMonth: Int, datesContainer: LinearLayout) {
         val datesPerRow = 7
@@ -104,7 +92,6 @@ class Schedule : Fragment() {
                 datesContainer.addView(linearLayout)
             }
 
-            // Create empty TextView for leading spaces
             val emptyTextView = TextView(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
                 gravity = Gravity.CENTER
@@ -121,55 +108,63 @@ class Schedule : Fragment() {
                 datesContainer.addView(linearLayout)
             }
 
-            // Create a FrameLayout to hold the date TextView
             val dateFrameLayout = FrameLayout(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
 
-            // Create a TextView for each date
             val dateTextView = TextView(requireContext()).apply {
                 text = date.toString()
                 gravity = Gravity.CENTER
                 textSize = 18f
                 setPadding(8, 8, 8, 8)
 
-                // Set background for today's date
                 if (date == today) {
                     background = resources.getDrawable(R.drawable.circle_current_date, null)
-                    setTextColor(Color.WHITE) // Change text color for contrast
+                    setTextColor(Color.WHITE)
                 }
 
-                // Set click listener for the date
                 setOnClickListener {
                     handleDateClick(this)
                 }
             }
 
             dateFrameLayout.addView(dateTextView)
-            linearLayout?.addView(dateFrameLayout) ?: run {}
+            linearLayout?.addView(dateFrameLayout)
         }
     }
 
-    // Function to handle the date click
     private fun handleDateClick(clickedDateTextView: TextView) {
-        // Reset the previously selected date's background (if any)
+        // Clear the previous selection
         selectedDateTextView?.apply {
-            background = null // Reset background
-            setTextColor(Color.BLACK) // Reset text color to default
+            background = null
+            setTextColor(Color.BLACK)
         }
 
-        // Highlight the clicked date
-        clickedDateTextView.background = resources.getDrawable(R.drawable.clicked_date_background, null) // Change to your desired background
-
-        // Update the selected date reference
+        // Set the new selection
+        clickedDateTextView.background = resources.getDrawable(R.drawable.clicked_date_background, null)
         selectedDateTextView = clickedDateTextView
 
-        // Store the selected date in the variable (formatted as needed)
+        // Update selected date
         val day = clickedDateTextView.text.toString().toInt()
-        val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH is 0-based
+        val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
-        selectedDate = "$year-$month-$day" // Format as "YYYY-MM-DD"
+        selectedDate = "$year-$month-$day"
 
+        // Reload user schedule for the selected date
+        userSchedule.updateSelectedDate(selectedDate!!)
+    }
+
+
+    private fun reloadUserSchedule() {
+        val userId = auth.currentUser?.uid
+        if (userId != null && selectedDate != null) {
+            val userScheduleFragment = UserSchedule()
+            userScheduleFragment.loadScheduleData(userId, selectedDate!!)
+            // Refresh the displayed fragment, if needed
+            // Replace the fragment or update the adapter here
+        } else {
+            Toast.makeText(context, "User not logged in or date not selected", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showAddSchedulePopup() {
@@ -196,40 +191,35 @@ class Schedule : Fragment() {
             val specialNotes = specialNotesEditText.text.toString().trim()
             val userId = auth.currentUser?.uid
 
-            // Ensure all fields are filled and date is selected
             if (activityName.isNotEmpty() && userId != null && selectedDate != null) {
-                // Create an ActivityData instance including the selected date
                 val activityData = ActivityData(activityName, description, specialNotes, userId, selectedDate!!)
-
-                // Save to Firebase Realtime Database
                 database.child("activities").push().setValue(activityData)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Activity added!", Toast.LENGTH_SHORT).show()
                         alertDialog.dismiss()
+                        reloadUserSchedule() // Reload schedule after adding new activity
                     }
                     .addOnFailureListener {
-                        Toast.makeText(context, "Error adding activity", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Failed to add activity!", Toast.LENGTH_SHORT).show()
                     }
             } else {
-                Toast.makeText(context, "Please fill all fields and select a date", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
             }
         }
 
         alertDialog.show()
     }
 
-
-
-    data class ActivityData(
-        val activityName: String,
-        val description: String,
-        val specialNotes: String,
-        val userId: String,
-        val date: String
-    )
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
+data class ActivityData(
+    val activityName: String = "",
+    val description: String = "",
+    val specialNotes: String = "",
+    val userId: String = "",
+    val date: String = ""
+)

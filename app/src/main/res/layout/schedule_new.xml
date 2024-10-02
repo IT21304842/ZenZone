@@ -83,5 +83,4 @@
         android:text="Add Activity"
         android:textSize="16sp" />
 
-
 </LinearLayout>

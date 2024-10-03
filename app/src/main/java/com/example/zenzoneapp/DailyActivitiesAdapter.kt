@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class DailyActivitiesAdapter(
-    private val items: List<CardItem>,
+    private val items: List<ActivityData>,
     private val onItemClick: (Int) -> Unit // A lambda function to handle item clicks
 ) : RecyclerView.Adapter<DailyActivitiesAdapter.CardViewHolder>() {
 
@@ -30,7 +30,7 @@ class DailyActivitiesAdapter(
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val item = items[position]
-        holder.nameTextView.text = item.name
+        holder.nameTextView.text = item.activityName
         holder.descriptionTextView.text = item.description
 
         // Set a click listener on the card
@@ -45,7 +45,7 @@ class DailyActivitiesAdapter(
         }
     }
 
-    private fun showActivityDialog(context: Context, item: CardItem) {
+    private fun showActivityDialog(context: Context, item: ActivityData) {
         // Create a dialog for Activity Details
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.activity_details_popup)
@@ -53,7 +53,7 @@ class DailyActivitiesAdapter(
         // Set activity name and description in the dialog
         val activityNameTextView = dialog.findViewById<TextView>(R.id.activityName)
         val activityDesTextView = dialog.findViewById<TextView>(R.id.activityDes)
-        activityNameTextView.text = item.name
+        activityNameTextView.text = item.activityName
         activityDesTextView.text = item.description
 
         // Close button functionality
@@ -94,12 +94,7 @@ class DailyActivitiesAdapter(
         rateDialog.show()
     }
 
-
-
-
     override fun getItemCount() = items.size
 }
 
-// A data class to represent card items
-data class CardItem(val name: String, val description: String)
 

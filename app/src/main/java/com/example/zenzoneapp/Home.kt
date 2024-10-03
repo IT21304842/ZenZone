@@ -55,7 +55,9 @@ class Home : Fragment() {
 
         // Set up RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = DailyActivitiesAdapter(cardItems) { position -> onCardClick(position) }
+        adapter = DailyActivitiesAdapter(cardItems, { position -> onCardClick(position) }) { updatedItem ->
+            updateActivityStatus(updatedItem) // Update activity status and comment
+        }
         recyclerView.adapter = adapter
 
         // Initialize the appointment recycler view
@@ -142,23 +144,28 @@ class Home : Fragment() {
 
         if (position == currentStage - 1) {
             updateProgress()
-        } else if (position > currentStage - 1) {
-            currentStage = position + 1
-            updateProgress()
+        } else {
+            // Do nothing or handle differently if not the current stage
         }
-
-        lastClickedPosition = position
+        lastClickedPosition = position // Update the last clicked position
     }
 
     private fun updateProgress() {
-        val progressPercentage = (currentStage.toFloat() / cardItems.size * 100).toInt()
-        progressBar.progress = progressPercentage
+        // Logic for updating the progress can be added here
+        // For example, increment the stage
+        currentStage++
+        progressText.text = "Current Stage: $currentStage"
+    }
 
-        progressText.text = when (currentStage) {
-            in 1 until cardItems.size -> "Activity $currentStage"
-            cardItems.size -> "You Did Well Today!"
-            else -> "Activity 1"
-        }
+    private fun updateActivityStatus(updatedItem: ActivityData) {
+        // Update the activity in the database using the unique activityId
+        databaseReference.child(updatedItem.activityId).setValue(updatedItem)
+            .addOnSuccessListener {
+                Log.d("HomeFragment", "Activity updated successfully: ${updatedItem.activityName}")
+            }
+            .addOnFailureListener { error ->
+                Log.e("HomeFragment", "Error updating activity: ${error.message}")
+            }
     }
 
     private fun setCurrentMonthAndDates() {
@@ -185,10 +192,10 @@ class Home : Fragment() {
             // Highlight today's date
             if (date == todayDate) {
                 dateTextViews[i].setBackgroundResource(R.drawable.circle_current_date)
-                dateTextViews[i].setTextColor(resources.getColor(R.color.white)) // Optional: Change text color for visibility
+                dateTextViews[i].setTextColor(resources.getColor(R.color.white))
             } else {
                 dateTextViews[i].setBackgroundResource(0)
-                dateTextViews[i].setTextColor(resources.getColor(R.color.black)) // Optional: Reset text color
+                dateTextViews[i].setTextColor(resources.getColor(R.color.black))
             }
 
             calendar.add(Calendar.DAY_OF_MONTH, 1) // Move to the next day

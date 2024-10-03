@@ -192,8 +192,24 @@ class Schedule : Fragment() {
             val userId = auth.currentUser?.uid
 
             if (activityName.isNotEmpty() && userId != null && selectedDate != null) {
-                val activityData = ActivityData(activityName, description, specialNotes, userId, selectedDate!!)
-                database.child("activities").push().setValue(activityData)
+                // Create a new activity reference using push() to generate a unique ID
+                val newActivityRef = database.child("activities").push()
+
+                // Create an ActivityData object with the generated ID
+                val activityData = ActivityData(
+                    activityId = newActivityRef.key ?: "", // Set the activity ID here
+                    activityName = activityName,
+                    description = description,
+                    specialNotes = specialNotes,
+                    userId = userId,
+                    date = selectedDate!!,
+                    status = "pending",
+                    reaction = "happy",
+                    comment = ""
+                )
+
+                // Save the activity data to the database
+                newActivityRef.setValue(activityData)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Activity added!", Toast.LENGTH_SHORT).show()
                         alertDialog.dismiss()
@@ -217,9 +233,13 @@ class Schedule : Fragment() {
 }
 
 data class ActivityData(
+    val activityId: String = "",
     val activityName: String = "",
     val description: String = "",
     val specialNotes: String = "",
     val userId: String = "",
-    val date: String = ""
+    val date: String = "",
+    var status: String = "",
+    var comment: String = "",
+    var reaction: String = ""
 )

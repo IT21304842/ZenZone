@@ -9,8 +9,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class HistoryScheduleAdapter(
-    private val historyScheduleList: List<HistoryScheduleData>,
-    private val onCommentClick: (HistoryScheduleData) -> Unit
+    private val historyScheduleList: List<ActivityData>,
+    private val onCommentClick: (ActivityData) -> Unit
 ) : RecyclerView.Adapter<HistoryScheduleAdapter.HistoryScheduleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryScheduleViewHolder {
@@ -20,7 +20,7 @@ class HistoryScheduleAdapter(
 
     override fun onBindViewHolder(holder: HistoryScheduleViewHolder, position: Int) {
         val historySchedule = historyScheduleList[position]
-        holder.tvName.text = historySchedule.name
+        holder.tvName.text = historySchedule.activityName
         holder.tvDescription.text = historySchedule.description
 
         // If there's a comment, set it
@@ -45,6 +45,6 @@ class HistoryScheduleAdapter(
         val tvDescription: TextView = itemView.findViewById(R.id.tvDes)
         val tvComment: TextView = itemView.findViewById(R.id.commentTextView)
         val commentCardView: CardView = itemView.findViewById(R.id.commentCardView)
-//        val commentImageView: ImageView = itemView.findViewById(R.id.commentimg)
     }
 }
+

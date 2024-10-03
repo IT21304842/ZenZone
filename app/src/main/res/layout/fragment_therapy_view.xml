@@ -93,4 +93,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="0.033" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="Add Schedule"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@color/Tint"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.66"
+        app:maxImageSize="40dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

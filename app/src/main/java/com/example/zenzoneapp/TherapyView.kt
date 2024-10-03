@@ -1,4 +1,3 @@
-
 package com.example.zenzoneapp
 
 import android.os.Bundle
@@ -10,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.db.williamchart.view.BarChartView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TherapyView : Fragment() {
 
@@ -44,6 +44,12 @@ class TherapyView : Fragment() {
         // Set up back button click listener
         view.findViewById<ImageView>(R.id.back_button).setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        // FloatingActionButton click listener
+        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+            // Show the therapy session dialog
+            TherapySessionDialog.newInstance().show(childFragmentManager, "TherapySessionDialog")
         }
     }
 

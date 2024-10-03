@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_corners"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:src="@drawable/baseline_close_24" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="242dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:baselineAligned="false"
+        android:fontFamily="@font/karla_medium"
+        android:text="Schedule A New Therapy Session"
+        android:textAlignment="center"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/therapyDate"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:fontFamily="@font/karla"
+        android:hint="Select Date..."
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="14dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/therapyTime"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:fontFamily="@font/karla"
+        android:hint="Select Time..."
+        android:padding="14dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/therapyLocation"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:fontFamily="@font/karla"
+        android:hint="Location..."
+        android:padding="14dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/therapist"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:fontFamily="@font/karla"
+        android:hint="Therapist..."
+        android:padding="14dp"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#69D4DC"
+        android:fontFamily="@font/karla_bold"
+        android:text="Add Session"
+        android:textSize="16sp" />
+
+</LinearLayout>

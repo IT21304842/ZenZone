@@ -20,8 +20,6 @@ class Home : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var progressText: TextView
     private lateinit var recyclerView: RecyclerView
-    private var currentStage = 1 // To track the current stage
-    private var lastClickedPosition = -1 // To track the last clicked card position
 
     private val cardItems = mutableListOf<ActivityData>() // This will hold the fetched activities
     private lateinit var adapter: DailyActivitiesAdapter
@@ -55,7 +53,7 @@ class Home : Fragment() {
 
         // Set up RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = DailyActivitiesAdapter(cardItems, { position -> onCardClick(position) }) { updatedItem ->
+        adapter = DailyActivitiesAdapter(cardItems) { updatedItem ->
             updateActivityStatus(updatedItem) // Update activity status and comment
         }
         recyclerView.adapter = adapter
@@ -94,7 +92,7 @@ class Home : Fragment() {
 
     private fun fetchTodayActivities() {
         val todayDate = getTodayDate()
-        Log.d("HomeFragment", "Fetching activities for today's date: $todayDate") // Log the date for debugging
+        Log.d("HomeFragment", "Fetching activities for today's date: $todayDate")
 
         // Query activities where the date matches today's date
         val query = databaseReference.orderByChild("date").equalTo(todayDate)
@@ -107,23 +105,43 @@ class Home : Fragment() {
                         val activity = data.getValue(ActivityData::class.java)
                         if (activity != null && activity.userId == auth.currentUser?.uid) {
                             cardItems.add(activity)
-                            Log.d("HomeFragment", "Activity found: ${activity.date}, User: ${activity.userId}") // Log activity details
+                            Log.d("HomeFragment", "Activity found: ${activity.date}, User: ${activity.userId}")
                         }
                     }
                 } else {
-                    Log.d("HomeFragment", "No activities found for today's date.") // Log if no data found
+                    Log.d("HomeFragment", "No activities found for today's date.")
                 }
 
                 // Notify the adapter that data has changed
                 adapter.notifyDataSetChanged()
-                Log.d("HomeFragment", "Adapter notified. Total activities: ${cardItems.size}") // Log the size of the list
+                Log.d("HomeFragment", "Adapter notified. Total activities: ${cardItems.size}")
+
+                // Update the progress bar after fetching the activities
+                updateProgressBar()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("HomeFragment", "Error fetching activities: ${error.message}") // Log error in case of failure
+                Log.e("HomeFragment", "Error fetching activities: ${error.message}")
             }
         })
     }
+
+    private fun updateProgressBar() {
+        // Calculate the total number of activities and completed activities
+        val totalActivities = cardItems.size
+        val completedActivities = cardItems.count { it.status == "completed" }
+
+        // Update the progress bar
+        if (totalActivities > 0) {
+            val progressPercentage = (completedActivities * 100) / totalActivities
+            progressBar.progress = progressPercentage
+            progressText.text = "$completedActivities / $totalActivities completed"
+        } else {
+            progressBar.progress = 0
+            progressText.text = "No activities for today."
+        }
+    }
+
 
     private fun getTodayDate(): String {
         val calendar = Calendar.getInstance()
@@ -137,25 +155,6 @@ class Home : Fragment() {
         return "$year-$month-$day"
     }
 
-    private fun onCardClick(position: Int) {
-        if (position == lastClickedPosition) {
-            return // Do nothing if the same card is clicked again
-        }
-
-        if (position == currentStage - 1) {
-            updateProgress()
-        } else {
-            // Do nothing or handle differently if not the current stage
-        }
-        lastClickedPosition = position // Update the last clicked position
-    }
-
-    private fun updateProgress() {
-        // Logic for updating the progress can be added here
-        // For example, increment the stage
-        currentStage++
-        progressText.text = "Current Stage: $currentStage"
-    }
 
     private fun updateActivityStatus(updatedItem: ActivityData) {
         // Update the activity in the database using the unique activityId

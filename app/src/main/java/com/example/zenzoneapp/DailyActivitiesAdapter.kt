@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class DailyActivitiesAdapter(
     private val items: List<ActivityData>,
-    private val onItemClick: (Int) -> Unit, // A lambda function to handle item clicks
+    // A lambda function to handle item clicks
     private val onUpdateStatus: (ActivityData) -> Unit // A lambda function to update status
 ) : RecyclerView.Adapter<DailyActivitiesAdapter.CardViewHolder>() {
 
@@ -34,11 +34,6 @@ class DailyActivitiesAdapter(
         val item = items[position]
         holder.nameTextView.text = item.activityName
         holder.descriptionTextView.text = item.description
-
-        // Set a click listener on the card
-        holder.cardView.setOnClickListener {
-            onItemClick(position) // Call the click listener for the card
-        }
 
         // Set click listener for the moreVertIcon
         holder.itemView.findViewById<ImageView>(R.id.moreVertIcon).setOnClickListener {

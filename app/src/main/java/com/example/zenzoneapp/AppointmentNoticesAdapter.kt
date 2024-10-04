@@ -8,40 +8,33 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.zenzoneapp.R
+import java.util.Calendar
 
-class AppointmentNoticesAdapter(
-    private val appointmentItems: List<AppointmentItem>
-) : RecyclerView.Adapter<AppointmentNoticesAdapter.AppointmentViewHolder>() {
+class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : RecyclerView.Adapter<AppointmentNoticesAdapter.AppointmentViewHolder>() {
 
-    class AppointmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView = view.findViewById(R.id.tvName)
-        val tvTime: TextView = view.findViewById(R.id.AppointmentTime)
-        val tvLocation: TextView = view.findViewById(R.id.AppointmentLocation)
-        val openIcon: ImageView = view.findViewById(R.id.openIcon) // Assuming you've added an id for the icon
+
+    class AppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val appointmentTime: TextView = itemView.findViewById(R.id.AppointmentTime)
+        val appointmentLocation: TextView = itemView.findViewById(R.id.AppointmentLocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.appointment_list_item_home, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.appointment_list_item_home, parent, false)
         return AppointmentViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AppointmentViewHolder, position: Int) {
-        val appointmentItem = appointmentItems[position]
-        holder.tvName.text = appointmentItem.name
-        holder.tvTime.text = appointmentItem.time
-        holder.tvLocation.text = appointmentItem.location
+        val appointment = appointments[position]
+        holder.appointmentLocation.text = appointment.location // Assuming the Appointment class has a 'name' property
+        holder.appointmentTime.text = appointment.time // Assuming the Appointment class has a 'time' property
 
-        // Set click listener for the open icon to show the dialog
-        holder.openIcon.setOnClickListener {
-            showAppointmentDialog(holder.itemView.context, appointmentItem)
-        }
     }
 
-    override fun getItemCount() = appointmentItems.size
+    override fun getItemCount(): Int {
+        return appointments.size
+    }
 
-    private fun showAppointmentDialog(context: Context, appointmentItem: AppointmentItem) {
+    private fun showAppointmentDialog(context: Context, appointmentItem: Appointment) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.appointmet_details_popup, null)
 
         // Create the dialog
@@ -51,7 +44,7 @@ class AppointmentNoticesAdapter(
 
         // Set appointment details in the dialog
         val therapyNameTextView: TextView = dialogView.findViewById(R.id.TherapyName)
-        therapyNameTextView.text = appointmentItem.name
+        therapyNameTextView.text = appointmentItem.therapist
 
         val appointmentTimeTextView: TextView = dialogView.findViewById(R.id.AppointmentTime)
         appointmentTimeTextView.text = appointmentItem.time
@@ -68,13 +61,7 @@ class AppointmentNoticesAdapter(
             dialog.dismiss()
         }
     }
-
 }
 
 
-data class AppointmentItem(
-    val name: String,
-    val time: String,
-    val location: String
-)
 

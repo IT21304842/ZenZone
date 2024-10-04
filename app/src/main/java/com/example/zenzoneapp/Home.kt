@@ -24,15 +24,9 @@ class Home : Fragment() {
     private val cardItems = mutableListOf<ActivityData>() // This will hold the fetched activities
     private lateinit var adapter: DailyActivitiesAdapter
 
-    // Add a variable to track the total number of cards
-    private val totalCards = cardItems.size
-
+    // Change appointmentItems to hold appointments from the database
+    private val appointmentItems = mutableListOf<Appointment>() // Changed to mutable list
     private lateinit var appointmentRecyclerView: RecyclerView
-    private val appointmentItems = listOf(
-        AppointmentItem("Appointment 1", "10:00 AM", "Location A"),
-        AppointmentItem("Appointment 2", "11:30 AM", "Location B"),
-        AppointmentItem("Appointment 3", "1:00 PM", "Location C"),
-    )
 
     private lateinit var currentMonthTextView: TextView
     private lateinit var dateTextViews: List<TextView>
@@ -51,7 +45,7 @@ class Home : Fragment() {
         progressText = view.findViewById(R.id.progressText)
         recyclerView = view.findViewById(R.id.recyclerView)
 
-        // Set up RecyclerView
+        // Set up RecyclerView for activities
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = DailyActivitiesAdapter(cardItems) { updatedItem ->
             updateActivityStatus(updatedItem) // Update activity status and comment
@@ -63,15 +57,14 @@ class Home : Fragment() {
 
         // Set up the appointment RecyclerView
         appointmentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val appointmentAdapter = AppointmentNoticesAdapter(appointmentItems)
-        appointmentRecyclerView.adapter = appointmentAdapter
 
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().getReference("activities")
 
-        // Fetch activities for today's date
+        // Fetch activities and appointments for today's date
         fetchTodayActivities()
+        fetchTodayAppointments() // Call the new method
 
         // Initialize current month and week dates
         currentMonthTextView = view.findViewById(R.id.currentMonthTextView)
@@ -126,6 +119,41 @@ class Home : Fragment() {
         })
     }
 
+    private fun fetchTodayAppointments() {
+        val todayDate = getTodayDateforAppointment()
+        Log.d("HomeFragment", "Fetching appointments for today's date: $todayDate")
+
+        // Reference to the therapy_sessions table
+        val appointmentReference = FirebaseDatabase.getInstance().getReference("therapy_sessions")
+        val query = appointmentReference.orderByChild("date").equalTo(todayDate)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                appointmentItems.clear() // Clear old appointment data
+
+                if (snapshot.exists()) {
+                    for (data in snapshot.children) {
+                        val appointment = data.getValue(Appointment::class.java)
+                        if (appointment != null && appointment.userId == auth.currentUser?.uid) {
+                            appointmentItems.add(appointment) // Add appointment to the list
+                            Log.d("HomeFragment", "Appointment found: ${appointment.date}, User: ${appointment.userId}")
+                        }
+                    }
+                } else {
+                    Log.d("HomeFragment", "No appointments found for today's date.")
+                }
+
+                // Update the appointment RecyclerView with new data
+                val appointmentAdapter = AppointmentNoticesAdapter(appointmentItems)
+                appointmentRecyclerView.adapter = appointmentAdapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeFragment", "Error fetching appointments: ${error.message}")
+            }
+        })
+    }
+
     private fun updateProgressBar() {
         // Calculate the total number of activities and completed activities
         val totalActivities = cardItems.size
@@ -142,6 +170,17 @@ class Home : Fragment() {
         }
     }
 
+    private fun getTodayDateforAppointment(): String {
+        val calendar = Calendar.getInstance()
+
+        // Get year, month, and day
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH is 0-indexed
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        // Format the date to match the format in your database (day/month/year)
+        return "$day/$month/$year"
+    }
 
     private fun getTodayDate(): String {
         val calendar = Calendar.getInstance()
@@ -201,3 +240,5 @@ class Home : Fragment() {
         }
     }
 }
+
+// Remove the AppointmentItem class and keep only Appointment class.

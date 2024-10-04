@@ -112,7 +112,7 @@
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/specialNotesEditText"
+        android:id="@+id/NotesEditText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -127,7 +127,7 @@
         android:background="@drawable/rounded_edittext_background"/>
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/CompleteButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

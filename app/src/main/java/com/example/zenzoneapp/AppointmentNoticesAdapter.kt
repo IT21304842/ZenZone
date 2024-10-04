@@ -5,9 +5,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 
 class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : RecyclerView.Adapter<AppointmentNoticesAdapter.AppointmentViewHolder>() {
 
@@ -40,6 +44,8 @@ class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : R
         return appointments.size
     }
 
+// Inside your AppointmentNoticesAdapter class
+
     private fun showAppointmentDialog(context: Context, appointmentItem: Appointment) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.appointmet_details_popup, null)
 
@@ -61,6 +67,40 @@ class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : R
         val appointmentTherapistTextView: TextView = dialogView.findViewById(R.id.AppointmentTherapist)
         appointmentTherapistTextView.text = appointmentItem.therapist
 
+        // Reference to EditText for notes
+        val notesEditText: EditText = dialogView.findViewById(R.id.NotesEditText)
+        notesEditText.setText(appointmentItem.notes)
+
+        // Get the Complete Button
+        val completeButton: Button = dialogView.findViewById(R.id.CompleteButton)
+
+        // Handle the Complete button click
+        completeButton.setOnClickListener {
+            // Get the entered notes
+            val updatedNotes = notesEditText.text.toString()
+
+            // Update the notes and status in Firebase
+            val appointmentId = appointmentItem.id // Assuming you have the ID somewhere in appointmentItem
+            val dbRef = FirebaseDatabase.getInstance().getReference("therapy_sessions").child(appointmentId)
+
+            // Update the existing appointment
+            val updatedData = mapOf(
+                "notes" to updatedNotes,
+                "status" to "complete" // Change status to complete
+            )
+
+            dbRef.updateChildren(updatedData).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Update successful
+                    Toast.makeText(context, "Appointment updated successfully", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                } else {
+                    // Handle the error
+                    Toast.makeText(context, "Failed to update appointment", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         // Show the dialog
         dialog.show()
 
@@ -70,4 +110,6 @@ class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : R
             dialog.dismiss()
         }
     }
+
+
 }

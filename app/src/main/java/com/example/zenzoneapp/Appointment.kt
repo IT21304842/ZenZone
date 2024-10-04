@@ -1,6 +1,7 @@
 package com.example.zenzoneapp
 
 data class Appointment(
+    val id: String = "",
     val date: String = "",
     val location: String = "",
     val notes: String = "",

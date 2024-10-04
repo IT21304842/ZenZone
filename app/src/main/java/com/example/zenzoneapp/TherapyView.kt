@@ -66,11 +66,11 @@ class TherapyView : Fragment() {
         // Fetch upcoming therapy sessions for the logged-in user
         fetchUpcomingAppointments()
 
-        // FloatingActionButton click listener
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            // Show the therapy session dialog
-            TherapySessionDialog.newInstance().show(childFragmentManager, "TherapySessionDialog")
+            // Show the therapy session dialog with therapy name
+            TherapySessionDialog.newInstance(therapyName ?: "").show(childFragmentManager, "TherapySessionDialog")
         }
+
     }
 
     private fun fetchUpcomingAppointments() {
@@ -80,6 +80,7 @@ class TherapyView : Fragment() {
         // Get the logged-in user's ID
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid  // This will be the logged-in user's ID
+        val therapyName = arguments?.getString("therapyName") // Retrieve therapy name from arguments
 
         if (userId != null) {
             // Fetch upcoming therapy sessions for this user
@@ -87,7 +88,7 @@ class TherapyView : Fragment() {
                 val cardItems = mutableListOf<Appointment>()
                 snapshot.children.forEach { childSnapshot ->
                     val appointment = childSnapshot.getValue<Appointment>()
-                    if (appointment != null && appointment.status == "upcoming") {
+                    if (appointment != null && appointment.status == "upcoming" && appointment.therapyName == therapyName) { // Filter by therapy name
                         cardItems.add(appointment)
                     }
                 }
@@ -106,6 +107,7 @@ class TherapyView : Fragment() {
             Log.e("TherapyView", "Error: No user is logged in")
         }
     }
+
 
     private fun setupBarChart() {
         // Set up the bar chart data

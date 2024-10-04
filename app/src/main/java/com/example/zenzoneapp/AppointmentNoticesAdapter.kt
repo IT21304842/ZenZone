@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : RecyclerView.Adapter<AppointmentNoticesAdapter.AppointmentViewHolder>() {
 
     class AppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val therapyName: TextView = itemView.findViewById(R.id.tvName)
         val appointmentTime: TextView = itemView.findViewById(R.id.AppointmentTime)
         val appointmentLocation: TextView = itemView.findViewById(R.id.AppointmentLocation)
         val openIcon: ImageView = itemView.findViewById(R.id.openIcon) // Add openIcon reference
@@ -24,6 +25,7 @@ class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : R
 
     override fun onBindViewHolder(holder: AppointmentViewHolder, position: Int) {
         val appointment = appointments[position]
+        holder.therapyName.text = appointment.therapyName
         holder.appointmentLocation.text = appointment.location
         holder.appointmentTime.text = appointment.time
 
@@ -48,6 +50,7 @@ class AppointmentNoticesAdapter(private val appointments: List<Appointment>) : R
 
         // Set appointment details in the dialog
         val therapyNameTextView: TextView = dialogView.findViewById(R.id.TherapyName)
+        therapyNameTextView.text = appointmentItem.therapyName
 
         val appointmentTimeTextView: TextView = dialogView.findViewById(R.id.AppointmentTime)
         appointmentTimeTextView.text = appointmentItem.time

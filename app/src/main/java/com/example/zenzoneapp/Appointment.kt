@@ -7,5 +7,6 @@ data class Appointment(
     val status: String = "",
     val therapist: String = "",
     val time: String = "",
-    val userId: String =""
+    val userId: String ="",
+    val therapyName: String = ""
 )

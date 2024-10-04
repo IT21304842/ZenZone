@@ -68,7 +68,6 @@ class Therapy : Fragment() {
         // Fetch therapy data from Firebase
         fetchTherapyData()
 
-
         // Set up Medication RecyclerView
         medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
         medicationAdapter = MedicationListAdapter(medicationList)
@@ -104,7 +103,6 @@ class Therapy : Fragment() {
             }
         })
     }
-
 
 }
 

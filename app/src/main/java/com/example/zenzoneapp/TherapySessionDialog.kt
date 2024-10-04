@@ -23,6 +23,9 @@ class TherapySessionDialog : DialogFragment() {
     private lateinit var therapistEditText: EditText
     private lateinit var addButton: Button
 
+    // Store the therapy name
+    private var therapyName: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +38,9 @@ class TherapySessionDialog : DialogFragment() {
         therapyLocationEditText = view.findViewById(R.id.therapyLocation)
         therapistEditText = view.findViewById(R.id.therapist)
         addButton = view.findViewById(R.id.addButton)
+
+        // Get the therapy name from arguments
+        therapyName = arguments?.getString("therapyName")
 
         // Set OnClickListener for the therapyDate EditText to show DatePickerDialog
         therapyDateEditText.setOnClickListener {
@@ -122,7 +128,8 @@ class TherapySessionDialog : DialogFragment() {
                 "location" to location,
                 "therapist" to therapist,
                 "status" to "upcoming",  // Default value
-                "notes" to ""            // Empty for now
+                "notes" to "" ,           // Empty for now
+                "therapyName" to therapyName
             )
 
             therapySessionRef.setValue(therapySessionData).addOnCompleteListener {
@@ -138,8 +145,12 @@ class TherapySessionDialog : DialogFragment() {
 
 
     companion object {
-        fun newInstance(): TherapySessionDialog {
-            return TherapySessionDialog()
+        fun newInstance(therapyName: String): TherapySessionDialog {
+            val dialog = TherapySessionDialog()
+            val args = Bundle()
+            args.putString("therapyName", therapyName)
+            dialog.arguments = args
+            return dialog
         }
     }
 }

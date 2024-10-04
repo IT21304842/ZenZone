@@ -22,7 +22,7 @@ class MedicationListAdapter(private val medicationList: List<Medication>) :
     override fun onBindViewHolder(holder: MedicationViewHolder, position: Int) {
         val medication = medicationList[position]
         holder.medicationName.text = medication.name
-        holder.medicationDose.text = medication.dosage
+        holder.medicationDose.text = medication.dose
     }
 
     override fun getItemCount(): Int {

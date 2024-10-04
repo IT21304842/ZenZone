@@ -24,13 +24,13 @@ class Therapy : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var therapyAdapter: TherapyListAdapter
-    private lateinit var medicationRecyclerView: RecyclerView
-    private lateinit var medicationAdapter: MedicationListAdapter
-    private var medicationList = listOf(
-        Medication("Medication 1", "10mg"),
-        Medication("Medication 2", "5mg"),
-        Medication("Medication 3", "20mg")
-    )
+//    private lateinit var medicationRecyclerView: RecyclerView
+//    private lateinit var medicationAdapter: MedicationListAdapter
+//    private var medicationList = listOf(
+//        Medication("Medication 1", "10mg"),
+//        Medication("Medication 2", "5mg"),
+//        Medication("Medication 3", "20mg")
+//    )
 
     private val therapyList = mutableListOf<TherapyItem>()
 
@@ -68,11 +68,11 @@ class Therapy : Fragment() {
         // Fetch therapy data from Firebase
         fetchTherapyData()
 
-        // Set up Medication RecyclerView
-        medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
-        medicationAdapter = MedicationListAdapter(medicationList)
-        medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        medicationRecyclerView.adapter = medicationAdapter
+//        // Set up Medication RecyclerView
+//        medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
+//        medicationAdapter = MedicationListAdapter(medicationList)
+//        medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        medicationRecyclerView.adapter = medicationAdapter
 
         // Set up click listener for addMedication button
         view.findViewById<FloatingActionButton>(R.id.addMed).setOnClickListener {

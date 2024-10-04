@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class TherapyListAdapter(
     private val therapyList: List<TherapyItem>,
@@ -26,20 +27,23 @@ class TherapyListAdapter(
 
     override fun onBindViewHolder(holder: TherapyViewHolder, position: Int) {
         val therapy = therapyList[position]
-        holder.tvName.text = therapy.name
-        holder.imgTitle.setImageResource(therapy.imageResId)
+        holder.tvName.text = therapy.acronym
+
+        // Load the image from the URL using Glide
+        Glide.with(holder.itemView.context)
+            .load(therapy.imageUrl)
+            .into(holder.imgTitle)
 
         holder.itemView.setOnClickListener {
             // Navigate to TherapyViewFragment
             val fragment = TherapyView.newInstance(therapy.name)
             val fragmentManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment) // Ensure this ID matches your main fragment container
-                .addToBackStack(null) // Add to back stack if you want to enable back navigation
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
                 .commit()
         }
     }
-
 
     override fun getItemCount(): Int {
         return therapyList.size

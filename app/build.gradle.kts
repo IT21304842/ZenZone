@@ -53,6 +53,10 @@ dependencies {
 
     implementation("com.diogobernardino:williamchart:3.10.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation(libs.firebase.storage)
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

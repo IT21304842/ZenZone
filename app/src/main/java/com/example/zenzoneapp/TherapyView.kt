@@ -1,21 +1,32 @@
 package com.example.zenzoneapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.db.williamchart.view.BarChartView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 
 class TherapyView : Fragment() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var cardAdapter: AppointmentAdapter
     private lateinit var barChart: BarChartView
+
+    // Firebase Database Reference
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +42,18 @@ class TherapyView : Fragment() {
         viewPager = view.findViewById(R.id.viewPager)
         barChart = view.findViewById(R.id.barChart)
 
+        // Set up an empty adapter initially to avoid layout warnings
+        cardAdapter = AppointmentAdapter(emptyList())
+        viewPager.adapter = cardAdapter
+
+        // Initialize Views
+        viewPager = view.findViewById(R.id.viewPager)
+        barChart = view.findViewById(R.id.barChart)
+
+        setupBarChart()
+
         // Get therapy name from arguments
         val therapyName = arguments?.getString("therapyName")
-
-        // Set up ViewPager and BarChart
-        setupViewPager()
-        setupBarChart()
 
         // Set therapy name in TextView
         view.findViewById<TextView>(R.id.textView6).text = therapyName
@@ -46,6 +63,9 @@ class TherapyView : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+        // Fetch upcoming therapy sessions for the logged-in user
+        fetchUpcomingAppointments()
+
         // FloatingActionButton click listener
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             // Show the therapy session dialog
@@ -53,17 +73,38 @@ class TherapyView : Fragment() {
         }
     }
 
+    private fun fetchUpcomingAppointments() {
+        // Initialize the Firebase database reference
+        database = Firebase.database.reference.child("therapy_sessions")
 
-    private fun setupViewPager() {
-        // Sample appointment data
-        val cardItems = listOf(
-            Appointment("2024-09-30", "10:00 AM", "Location A", "Therapist A", ""),
-            Appointment("2024-10-01", "11:00 AM", "Location B", "Therapist B", ""),
-            Appointment("2024-10-02", "12:00 PM", "Location C", "Therapist C", "")
-        )
+        // Get the logged-in user's ID
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid  // This will be the logged-in user's ID
 
-        cardAdapter = AppointmentAdapter(cardItems)
-        viewPager.adapter = cardAdapter
+        if (userId != null) {
+            // Fetch upcoming therapy sessions for this user
+            database.orderByChild("userId").equalTo(userId).get().addOnSuccessListener { snapshot ->
+                val cardItems = mutableListOf<Appointment>()
+                snapshot.children.forEach { childSnapshot ->
+                    val appointment = childSnapshot.getValue<Appointment>()
+                    if (appointment != null && appointment.status == "upcoming") {
+                        cardItems.add(appointment)
+                    }
+                }
+
+                // Update the adapter with fetched appointments
+                cardAdapter = AppointmentAdapter(cardItems)
+                viewPager.adapter = cardAdapter
+
+                // Notify the adapter of data change
+                cardAdapter.notifyDataSetChanged()
+            }.addOnFailureListener { exception ->
+                // Handle possible errors
+                Log.e("TherapyView", "Error fetching appointments: ${exception.message}")
+            }
+        } else {
+            Log.e("TherapyView", "Error: No user is logged in")
+        }
     }
 
     private fun setupBarChart() {
@@ -93,3 +134,4 @@ class TherapyView : Fragment() {
         }
     }
 }
+

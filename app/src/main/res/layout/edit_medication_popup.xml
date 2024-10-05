@@ -64,7 +64,7 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/changeButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -131,9 +131,9 @@ class Therapy : Fragment() {
                     Log.d("Medications", "Fetched medication: $medication") // Add this log
                     medication?.let { medicationList.add(it) }
                 }
+                Log.d("Medications", "Total medications fetched: ${medicationList.size}") // Log the size of the list
                 medicationAdapter.notifyDataSetChanged()
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Therapy", "Error fetching medication data: ${error.message}")
             }

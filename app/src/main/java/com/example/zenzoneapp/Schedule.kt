@@ -36,6 +36,7 @@ class Schedule : Fragment() {
     private var selectedDate: String? = null
     private var selectedDateTextView: TextView? = null // To keep track of the selected date
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,11 +46,11 @@ class Schedule : Fragment() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
 
-        // Create UserSchedule instance here
         userSchedule = UserSchedule() // Initialize the fragment
 
+        // Add the fragment to the adapter
         val fragmentAdapter = FragmentAdapter(childFragmentManager)
-        fragmentAdapter.addFragment(userSchedule, "Yours") // Use the initialized instance
+        fragmentAdapter.addFragment(userSchedule, "Yours")
         fragmentAdapter.addFragment(RecommendationSchedule(), "Recommended")
         fragmentAdapter.addFragment(HistorySchedule(), "History")
 
@@ -145,15 +146,14 @@ class Schedule : Fragment() {
         selectedDateTextView = clickedDateTextView
 
         // Update selected date
-        val day = clickedDateTextView.text.toString().toInt()
-        val month = calendar.get(Calendar.MONTH) + 1
-        val year = calendar.get(Calendar.YEAR)
-        selectedDate = "$year-$month-$day"
+        val day = clickedDateTextView.text.toString().toInt() // Keep this as is
+        val month = calendar.get(Calendar.MONTH) + 1 // Keep this as is
+        val year = calendar.get(Calendar.YEAR) // Keep this as is
+        selectedDate = String.format("%04d-%d-%d", year, month, day) // Change "%02d" to "%d" for day
 
         // Reload user schedule for the selected date
         userSchedule.updateSelectedDate(selectedDate!!)
     }
-
 
     private fun reloadUserSchedule() {
         val userId = auth.currentUser?.uid

@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
 
 class UserSchedule : Fragment() {
 
@@ -35,18 +40,17 @@ class UserSchedule : Fragment() {
         adapter = UserScheduleAdapter(requireContext(), scheduleList, ::onEditClick, ::onDeleteClick)
         recyclerView.adapter = adapter
 
-        // Get the user ID safely
+        // Load today's activities by default
         val userId = auth.currentUser?.uid
-        val selectedDate = "2024-10-02" // Replace with the actual date you want to load
         if (userId != null) {
-            loadScheduleData(userId, selectedDate)
+            val today = getTodayDate() // Use the getTodayDate method you modified
+            loadScheduleData(userId, today) // Load today's date by default
         } else {
             Log.e("UserSchedule", "User ID is null, cannot load schedule data.")
         }
 
         return view
     }
-
 
     fun updateSelectedDate(selectedDate: String) {
         val userId = auth.currentUser?.uid
@@ -83,6 +87,14 @@ class UserSchedule : Fragment() {
             })
     }
 
+    fun getTodayDate(): String {
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH is zero-based
+        val year = calendar.get(Calendar.YEAR)
+        return String.format("%04d-%d-%d", year, month, day) // Change "%02d" to "%d" for day
+    }
+
     private fun onEditClick(scheduleData: UserScheduleData) {
         // Handle edit action
     }
@@ -91,3 +103,4 @@ class UserSchedule : Fragment() {
         // Handle delete action
     }
 }
+

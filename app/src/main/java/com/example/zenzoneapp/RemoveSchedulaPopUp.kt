@@ -10,7 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 
-class RemoveSchedulaPopUp(private val scheduleData: UserScheduleData, private val onRemoveConfirmed: (UserScheduleData) -> Unit) : DialogFragment() {
+class RemoveSchedulaPopUp(
+    private val scheduleData: UserScheduleData,
+    private val onRemoveConfirmed: (UserScheduleData) -> Unit
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(requireContext())

@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class UserScheduleAdapter(
-    private val context: Context,
+    private val fragment: UserSchedule,
     private var scheduleList: List<UserScheduleData>,
     private val onEditClick: (UserScheduleData) -> Unit,
     private val onDeleteClick: (UserScheduleData) -> Unit
@@ -24,7 +25,7 @@ class UserScheduleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserScheduleViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.user_sechdule_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.user_sechdule_list_item, parent, false)
         return UserScheduleViewHolder(view)
     }
 
@@ -39,15 +40,17 @@ class UserScheduleAdapter(
                 scheduleList = scheduleList.toMutableList().apply { set(position, updatedSchedule) }
                 notifyItemChanged(position)
             }
-            dialog.show((context as FragmentActivity).supportFragmentManager, "EditScheduleDialog")
+            dialog.show((fragment.requireActivity() as FragmentActivity).supportFragmentManager, "EditScheduleDialog")
         }
 
         holder.btnDelete.setOnClickListener {
             val dialog = RemoveSchedulaPopUp(scheduleData) { removedSchedule ->
+                // Call the removeActivity method directly from the fragment instance
+                fragment.removeActivity(scheduleData.activityId)
                 scheduleList = scheduleList.toMutableList().apply { remove(removedSchedule) }
                 notifyDataSetChanged()
             }
-            dialog.show((context as FragmentActivity).supportFragmentManager, "RemoveScheduleDialog")
+            dialog.show((fragment.requireActivity() as FragmentActivity).supportFragmentManager, "RemoveScheduleDialog")
         }
     }
 

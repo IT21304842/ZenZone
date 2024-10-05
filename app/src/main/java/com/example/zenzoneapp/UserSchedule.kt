@@ -15,7 +15,6 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-
 class UserSchedule : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
@@ -37,13 +36,13 @@ class UserSchedule : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         scheduleList = mutableListOf()
-        adapter = UserScheduleAdapter(requireContext(), scheduleList, ::onEditClick, ::onDeleteClick)
+        adapter = UserScheduleAdapter(this, scheduleList, ::onEditClick, ::onDeleteClick) // Pass 'this' as the UserSchedule instance
         recyclerView.adapter = adapter
 
         // Load today's activities by default
         val userId = auth.currentUser?.uid
         if (userId != null) {
-            val today = getTodayDate() // Use the getTodayDate method you modified
+            val today = getTodayDate()
             loadScheduleData(userId, today) // Load today's date by default
         } else {
             Log.e("UserSchedule", "User ID is null, cannot load schedule data.")
@@ -102,5 +101,22 @@ class UserSchedule : Fragment() {
     private fun onDeleteClick(scheduleData: UserScheduleData) {
         // Handle delete action
     }
-}
 
+    // New method to remove an activity
+    fun removeActivity(activityId: String) {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            database.child("activities").child(activityId).removeValue()
+                .addOnSuccessListener {
+                    Log.d("UserSchedule", "Activity removed successfully.")
+                    // Optionally, you can reload the schedule or update the UI here
+                    loadScheduleData(userId, getTodayDate()) // Reload the schedule
+                }
+                .addOnFailureListener { error ->
+                    Log.e("UserSchedule", "Failed to remove activity: ${error.message}")
+                }
+        } else {
+            Log.e("UserSchedule", "User ID is null, cannot remove activity.")
+        }
+    }
+}

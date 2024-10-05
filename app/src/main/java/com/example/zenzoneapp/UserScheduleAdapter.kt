@@ -1,20 +1,19 @@
 package com.example.zenzoneapp
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.reflect.KFunction1
 
 class UserScheduleAdapter(
     private val fragment: UserSchedule,
     private var scheduleList: List<ActivityData>,
     private val onEditClick: (ActivityData) -> Unit,
-    private val onDeleteClick: (ActivityData) -> Unit
+    private val onDeleteClick: KFunction1<String, Unit>
 ) : RecyclerView.Adapter<UserScheduleAdapter.UserScheduleViewHolder>() {
 
     inner class UserScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,6 +36,10 @@ class UserScheduleAdapter(
 
         holder.btnEdit.setOnClickListener {
             val dialog = EditSchedulePopUp(scheduleData) { updatedSchedule ->
+                // Update the schedule in the database
+                fragment.updateActivityInDatabase(updatedSchedule)
+
+                // Update the list and notify the adapter
                 scheduleList = scheduleList.toMutableList().apply { set(position, updatedSchedule) }
                 notifyItemChanged(position)
             }

@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 class UserSchedule : Fragment() {
 
@@ -35,7 +32,7 @@ class UserSchedule : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         scheduleList = mutableListOf()
-        adapter = UserScheduleAdapter(this, scheduleList, ::onEditClick, ::onDeleteClick)
+        adapter = UserScheduleAdapter(this, scheduleList, ::updateActivityInDatabase, ::removeActivity)
         recyclerView.adapter = adapter
 
         val userId = auth.currentUser?.uid
@@ -91,13 +88,7 @@ class UserSchedule : Fragment() {
         return String.format("%04d-%d-%d", year, month, day)
     }
 
-    private fun onEditClick(scheduleData: ActivityData) {
-        // Handle edit action
-    }
 
-    private fun onDeleteClick(scheduleData: ActivityData) {
-        // Handle delete action
-    }
 
     fun removeActivity(activityId: String) {
         val userId = auth.currentUser?.uid
@@ -115,5 +106,24 @@ class UserSchedule : Fragment() {
             Log.e("UserSchedule", "User ID is null, cannot remove activity.")
         }
     }
+
+    fun updateActivityInDatabase(updatedSchedule: ActivityData) {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            val activityRef = database.child("activities").child(updatedSchedule.activityId)
+            activityRef.setValue(updatedSchedule)
+                .addOnSuccessListener {
+                    Log.d("UserSchedule", "Activity updated successfully.")
+                    // Optionally refresh the list
+                    loadScheduleData(userId, updatedSchedule.date)
+                }
+                .addOnFailureListener { error ->
+                    Log.e("UserSchedule", "Failed to update activity: ${error.message}")
+                }
+        } else {
+            Log.e("UserSchedule", "User ID is null, cannot update activity.")
+        }
+    }
+
 
 }

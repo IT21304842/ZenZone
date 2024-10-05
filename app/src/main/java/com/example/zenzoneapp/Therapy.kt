@@ -13,28 +13,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
+import com.google.firebase.database.Query
 
 class Therapy : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var therapyAdapter: TherapyListAdapter
-//    private lateinit var medicationRecyclerView: RecyclerView
-//    private lateinit var medicationAdapter: MedicationListAdapter
-//    private var medicationList = listOf(
-//        Medication("Medication 1", "10mg"),
-//        Medication("Medication 2", "5mg"),
-//        Medication("Medication 3", "20mg")
-//    )
+    private lateinit var medicationRecyclerView: RecyclerView
+
+    private lateinit var medicationAdapter: MedicationListAdapter
+    private var medicationList = mutableListOf<Medication>()
+
 
     private val therapyList = mutableListOf<TherapyItem>()
 
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +48,13 @@ class Therapy : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
+        // Get the logged-in user's userId
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid
 
         database = FirebaseDatabase.getInstance().getReference("therapies")
 
@@ -68,11 +76,16 @@ class Therapy : Fragment() {
         // Fetch therapy data from Firebase
         fetchTherapyData()
 
-//        // Set up Medication RecyclerView
-//        medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
-//        medicationAdapter = MedicationListAdapter(medicationList)
-//        medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        medicationRecyclerView.adapter = medicationAdapter
+        // Fetch medication data based on userId
+        if (userId != null) {
+            fetchMedicationData(userId)
+        }
+
+        // Set up Medication RecyclerView
+        medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
+        medicationAdapter = MedicationListAdapter(medicationList)
+        medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        medicationRecyclerView.adapter = medicationAdapter
 
         // Set up click listener for addMedication button
         view.findViewById<FloatingActionButton>(R.id.addMed).setOnClickListener {
@@ -100,6 +113,30 @@ class Therapy : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Therapy", "Error fetching data: ${error.message}")
+            }
+        })
+    }
+
+    private fun fetchMedicationData(userId: String) {
+        // Reference to medication data without userId as the parent node
+        val medicationRef: Query = FirebaseDatabase.getInstance()
+            .getReference("medications")
+            .orderByChild("userId")
+            .equalTo(userId)
+
+        medicationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                medicationList.clear()
+                for (medicationSnapshot in snapshot.children) {
+                    val medication = medicationSnapshot.getValue<Medication>()
+                    Log.d("Medications", "Fetched medication: $medication") // Add this log
+                    medication?.let { medicationList.add(it) }
+                }
+                medicationAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Therapy", "Error fetching medication data: ${error.message}")
             }
         })
     }

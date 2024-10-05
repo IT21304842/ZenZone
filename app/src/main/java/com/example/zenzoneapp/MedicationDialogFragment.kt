@@ -33,7 +33,7 @@ class MedicationDialogFragment : DialogFragment() {
 
         // Get references to the EditText fields
         val nameEditText = view.findViewById<EditText>(R.id.NameEditText)
-        val timeTextView = view.findViewById<TextView>(R.id.timeTextView) // TextView for time
+        val timeTextView = view.findViewById<TextView>(R.id.timeTextView)
         val doseEditText = view.findViewById<EditText>(R.id.DoseEditText)
 
         // Set a click listener to open TimePickerDialog
@@ -56,8 +56,8 @@ class MedicationDialogFragment : DialogFragment() {
             val medication = Medication(medicationId, name, time, dose, userId)
 
             medicationId?.let {
-                // Save medication details in the Realtime Database under the user ID
-                database.child(userId).child(it).setValue(medication)
+                // Save medication details without using userId as the parent node
+                database.child(it).setValue(medication)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Medication added successfully", Toast.LENGTH_SHORT).show()
                         dismiss() // Close the dialog
@@ -72,20 +72,15 @@ class MedicationDialogFragment : DialogFragment() {
     }
 
     private fun showTimePickerDialog(timeTextView: TextView) {
-        // Get the current time
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
 
-        // Create TimePickerDialog
         val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-            // Format the time as HH:mm
             val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-            // Set the selected time in the TextView
             timeTextView.text = formattedTime
-        }, hour, minute, true) // Set to true for 24-hour format
+        }, hour, minute, true)
 
-        timePickerDialog.show() // Show the dialog
+        timePickerDialog.show()
     }
 }
-

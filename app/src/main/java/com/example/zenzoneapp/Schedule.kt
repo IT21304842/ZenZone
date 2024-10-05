@@ -64,6 +64,17 @@ class Schedule : Fragment() {
             showAddSchedulePopup()
         }
 
+        // Set up button listeners
+        binding.prevMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, -1) // Go to the previous month
+            updateMonthView(datesContainer) // Update the month view
+        }
+
+        binding.nextMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, 1) // Go to the next month
+            updateMonthView(datesContainer) // Update the month view
+        }
+
         return binding.root
     }
 

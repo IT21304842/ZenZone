@@ -1,6 +1,5 @@
 package com.example.zenzoneapp
 
-import MedicationListAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -83,7 +82,7 @@ class Therapy : Fragment() {
 
         // Set up Medication RecyclerView
         medicationRecyclerView = view.findViewById(R.id.recyclerViewMedications)
-        medicationAdapter = MedicationListAdapter(medicationList)
+        medicationAdapter = MedicationListAdapter(medicationList, requireContext()) // Pass context here
         medicationRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         medicationRecyclerView.adapter = medicationAdapter
 

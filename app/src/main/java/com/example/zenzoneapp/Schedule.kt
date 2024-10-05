@@ -191,35 +191,53 @@ class Schedule : Fragment() {
             val specialNotes = specialNotesEditText.text.toString().trim()
             val userId = auth.currentUser?.uid
 
-            if (activityName.isNotEmpty() && userId != null && selectedDate != null) {
-                // Create a new activity reference using push() to generate a unique ID
-                val newActivityRef = database.child("activities").push()
+            when {
+                activityName.isEmpty() -> {
+                    Toast.makeText(context, "Please fill in the Activity Name.", Toast.LENGTH_SHORT).show()
+                    activityNameEditText.requestFocus() // Highlight the field
+                }
+                description.isEmpty() -> {
+                    Toast.makeText(context, "Please fill in the Description.", Toast.LENGTH_SHORT).show()
+                    descriptionEditText.requestFocus() // Highlight the field
+                }
+                specialNotes.isEmpty() -> {
+                    Toast.makeText(context, "Please fill in the Special Notes.", Toast.LENGTH_SHORT).show()
+                    specialNotesEditText.requestFocus() // Highlight the field
+                }
+                selectedDate == null -> {
+                    Toast.makeText(context, "Please select a date.", Toast.LENGTH_SHORT).show()
+                }
+                userId == null -> {
+                    Toast.makeText(context, "User not logged in.", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    // Create a new activity reference using push() to generate a unique ID
+                    val newActivityRef = database.child("activities").push()
 
-                // Create an ActivityData object with the generated ID
-                val activityData = ActivityData(
-                    activityId = newActivityRef.key ?: "", // Set the activity ID here
-                    activityName = activityName,
-                    description = description,
-                    specialNotes = specialNotes,
-                    userId = userId,
-                    date = selectedDate!!,
-                    status = "pending",
-                    reaction = "happy",
-                    comment = ""
-                )
+                    // Create an ActivityData object with the generated ID
+                    val activityData = ActivityData(
+                        activityId = newActivityRef.key ?: "",
+                        activityName = activityName,
+                        description = description,
+                        specialNotes = specialNotes,
+                        userId = userId,
+                        date = selectedDate!!,
+                        status = "pending",
+                        reaction = "happy",
+                        comment = ""
+                    )
 
-                // Save the activity data to the database
-                newActivityRef.setValue(activityData)
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Activity added!", Toast.LENGTH_SHORT).show()
-                        alertDialog.dismiss()
-                        reloadUserSchedule() // Reload schedule after adding new activity
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(context, "Failed to add activity!", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+                    // Save the activity data to the database
+                    newActivityRef.setValue(activityData)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Activity added!", Toast.LENGTH_SHORT).show()
+                            alertDialog.dismiss()
+                            reloadUserSchedule() // Reload schedule after adding new activity
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Failed to add activity!", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
         }
 

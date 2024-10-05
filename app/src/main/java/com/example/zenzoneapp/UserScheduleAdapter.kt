@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class UserScheduleAdapter(
     private val fragment: UserSchedule,
-    private var scheduleList: List<UserScheduleData>,
-    private val onEditClick: (UserScheduleData) -> Unit,
-    private val onDeleteClick: (UserScheduleData) -> Unit
+    private var scheduleList: List<ActivityData>,
+    private val onEditClick: (ActivityData) -> Unit,
+    private val onDeleteClick: (ActivityData) -> Unit
 ) : RecyclerView.Adapter<UserScheduleAdapter.UserScheduleViewHolder>() {
 
     inner class UserScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -45,21 +45,25 @@ class UserScheduleAdapter(
 
         holder.btnDelete.setOnClickListener {
             val dialog = RemoveSchedulaPopUp(scheduleData) { removedSchedule ->
-                // Call the removeActivity method directly from the fragment instance
+                // Call the fragment method to remove the activity from the database
                 fragment.removeActivity(scheduleData.activityId)
+
+                // Remove the item from the list and update the adapter
                 scheduleList = scheduleList.toMutableList().apply { remove(removedSchedule) }
-                notifyDataSetChanged()
+                notifyDataSetChanged()  // Notify the adapter that the list has changed
             }
             dialog.show((fragment.requireActivity() as FragmentActivity).supportFragmentManager, "RemoveScheduleDialog")
         }
+
     }
 
     override fun getItemCount(): Int {
         return scheduleList.size
     }
 
-    fun updateScheduleList(newList: List<UserScheduleData>) {
+    fun updateScheduleList(newList: List<ActivityData>) {
         scheduleList = newList
         notifyDataSetChanged()
     }
 }
+

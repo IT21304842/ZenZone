@@ -19,7 +19,7 @@ class UserSchedule : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: UserScheduleAdapter
-    private lateinit var scheduleList: MutableList<UserScheduleData>
+    private lateinit var scheduleList: MutableList<ActivityData>
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
@@ -29,21 +29,19 @@ class UserSchedule : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_schedule, container, false)
 
-        // Initialize Firebase Auth and Database Reference
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         scheduleList = mutableListOf()
-        adapter = UserScheduleAdapter(this, scheduleList, ::onEditClick, ::onDeleteClick) // Pass 'this' as the UserSchedule instance
+        adapter = UserScheduleAdapter(this, scheduleList, ::onEditClick, ::onDeleteClick)
         recyclerView.adapter = adapter
 
-        // Load today's activities by default
         val userId = auth.currentUser?.uid
         if (userId != null) {
             val today = getTodayDate()
-            loadScheduleData(userId, today) // Load today's date by default
+            loadScheduleData(userId, today)
         } else {
             Log.e("UserSchedule", "User ID is null, cannot load schedule data.")
         }
@@ -61,7 +59,6 @@ class UserSchedule : Fragment() {
     }
 
     fun loadScheduleData(userId: String, selectedDate: String) {
-        // Check for database initialization
         if (!::database.isInitialized) {
             Log.e("UserSchedule", "Database reference has not been initialized.")
             return
@@ -72,7 +69,7 @@ class UserSchedule : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     scheduleList.clear()
                     for (dataSnapshot in snapshot.children) {
-                        val activityData = dataSnapshot.getValue(UserScheduleData::class.java)
+                        val activityData = dataSnapshot.getValue(ActivityData::class.java)
                         if (activityData != null && activityData.date == selectedDate) {
                             scheduleList.add(activityData)
                         }
@@ -89,28 +86,27 @@ class UserSchedule : Fragment() {
     fun getTodayDate(): String {
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH is zero-based
+        val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
-        return String.format("%04d-%d-%d", year, month, day) // Change "%02d" to "%d" for day
+        return String.format("%04d-%d-%d", year, month, day)
     }
 
-    private fun onEditClick(scheduleData: UserScheduleData) {
+    private fun onEditClick(scheduleData: ActivityData) {
         // Handle edit action
     }
 
-    private fun onDeleteClick(scheduleData: UserScheduleData) {
+    private fun onDeleteClick(scheduleData: ActivityData) {
         // Handle delete action
     }
 
-    // New method to remove an activity
     fun removeActivity(activityId: String) {
         val userId = auth.currentUser?.uid
         if (userId != null) {
             database.child("activities").child(activityId).removeValue()
                 .addOnSuccessListener {
                     Log.d("UserSchedule", "Activity removed successfully.")
-                    // Optionally, you can reload the schedule or update the UI here
-                    loadScheduleData(userId, getTodayDate()) // Reload the schedule
+                    // Reload the schedule to refresh the UI
+                    loadScheduleData(userId, getTodayDate())
                 }
                 .addOnFailureListener { error ->
                     Log.e("UserSchedule", "Failed to remove activity: ${error.message}")
@@ -119,4 +115,5 @@ class UserSchedule : Fragment() {
             Log.e("UserSchedule", "User ID is null, cannot remove activity.")
         }
     }
+
 }

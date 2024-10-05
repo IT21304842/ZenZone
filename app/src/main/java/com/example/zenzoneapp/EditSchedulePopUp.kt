@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 
-class EditSchedulePopUp(private val scheduleData: UserScheduleData, private val onEditConfirmed: (UserScheduleData) -> Unit) : DialogFragment() {
+class EditSchedulePopUp(private val scheduleData: ActivityData, private val onEditConfirmed: (ActivityData) -> Unit) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(requireContext())
@@ -21,7 +21,7 @@ class EditSchedulePopUp(private val scheduleData: UserScheduleData, private val 
 
         // Confirm edit
         editButton.setOnClickListener {
-            val updatedSchedule = UserScheduleData(editTextName.text.toString(), scheduleData.description)
+            val updatedSchedule = ActivityData(editTextName.text.toString(), scheduleData.description)
             onEditConfirmed(updatedSchedule)
             dismiss()
         }

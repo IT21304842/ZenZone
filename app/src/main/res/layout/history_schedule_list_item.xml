@@ -27,10 +27,10 @@
             android:textSize="19sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintHorizontal_bias="0.368"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.125" />
+            app:layout_constraintVertical_bias="0.186" />
 
         <TextView
             android:id="@+id/tvDes"
@@ -39,14 +39,14 @@
             android:layout_margin="8dp"
             android:fontFamily="@font/karla"
             android:text="Activity Description"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.331"
+            app:layout_constraintHorizontal_bias="0.449"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
-            app:layout_constraintVertical_bias="0.047" />
+            app:layout_constraintVertical_bias="0.035" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -54,10 +54,10 @@
             android:layout_height="53dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvName"
-            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.222"
+            app:layout_constraintVertical_bias="0.161"
             app:srcCompat="@drawable/baseline_sentiment_satisfied_alt_24" />
 
         <androidx.cardview.widget.CardView

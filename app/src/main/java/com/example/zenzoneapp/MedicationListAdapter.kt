@@ -19,6 +19,7 @@ class MedicationListAdapter(
 ) : RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder>() {
 
     inner class MedicationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val medicationTime: TextView = itemView.findViewById(R.id.medtime)
         val medicationName: TextView = itemView.findViewById(R.id.medication)
         val medicationDose: TextView = itemView.findViewById(R.id.dose)
         val removeButton: ImageButton = itemView.findViewById(R.id.removeButton) // Reference to the remove button
@@ -31,6 +32,7 @@ class MedicationListAdapter(
 
     override fun onBindViewHolder(holder: MedicationViewHolder, position: Int) {
         val medication = medicationList[position]
+        holder.medicationTime.text = medication.time
         holder.medicationName.text = medication.name
         holder.medicationDose.text = medication.dose
 
@@ -63,7 +65,7 @@ class MedicationListAdapter(
 
         // Populate the inputs with current medication data
         medicationNameInput.text = medication.name
-        medicationTimeInput.text = medication.time // Assuming you have a 'time' property
+        medicationTimeInput.text = medication.time
         medicationDoseInput.text = medication.dose
 
         // Set up time picker dialog when the medication time input is clicked

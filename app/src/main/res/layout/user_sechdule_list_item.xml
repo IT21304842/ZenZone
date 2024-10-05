@@ -38,14 +38,14 @@
             android:layout_margin="8dp"
             android:fontFamily="@font/karla"
             android:text="Activity Description"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintHorizontal_bias="0.236"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
-            app:layout_constraintVertical_bias="0.038" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btnEdit"
@@ -55,9 +55,9 @@
             android:backgroundTint="@color/Tint"
             android:src="@drawable/baseline_edit_24"
             app:layout_constraintBottom_toBottomOf="@+id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.592"
-            app:layout_constraintStart_toEndOf="@+id/tvName"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDes"
             app:layout_constraintVertical_bias="0.0" />
 
